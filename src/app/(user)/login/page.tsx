@@ -9,6 +9,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useLoginStore } from '@/stores/loginStore';
+import KakaoLoginButton from './KakaoLoginButton';
+// import KakaoLoginButton from './KakaoLoginButton';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || '';
@@ -124,6 +126,7 @@ export default function Login() {
             <NaverIcon className="absolute left-4 w-8 h-8" />
             네이버 로그인
           </button>
+          <KakaoLoginButton />
           <button type="button" className="p-4 w-full bg-[#FFE812]  text-black rounded-xl mt-4 relative flex items-center justify-center text-center cursor-pointer">
             <KakaotalkIcon className="absolute left-4 w-8 h-8" />
             카카오 로그인
