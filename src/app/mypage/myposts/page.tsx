@@ -35,14 +35,14 @@ export default function MyPosts() {
   if (loading) return <Loading />;
 
   return (
-    <div className="w-full p-2 sm:p-4 mt-4">
+    <div className="w-full p-2 sm:p-4 mt-4 text-dark-gray">
       <div className="space-y-4">
         <h2 className="font-bold text-base mb-2 sm:mb-4 sm:text-lg lg:mb-8 lg:text-xl">내가 쓴 글</h2>
 
         {/* 모바일 리스트형 */}
         <ul className="block sm:hidden">
           {posts.map((post, index) => (
-            <li key={post._id} className={`p-2 text-dark-gray border-b border-gray-300 ${index === 0 ? 'border-t-1 border-t-dark-gray' : ''}`}>
+            <li key={post._id} className={`p-2  border-b border-gray-300 ${index === 0 ? 'border-t-1 border-t-dark-gray' : ''}`}>
               <div className="flex gap-2 space-y-2">
                 <span className="text-sm font-bold">[{post.type}]</span>
                 <span className="text-sm">{post.title}</span>
@@ -56,7 +56,7 @@ export default function MyPosts() {
 
         {/* 태블릿/데스크탑 테이블형 */}
         <table className="hidden sm:table w-full text-sm lg:text-base border-t border-gray">
-          <thead className="bg-secondary text-dark-gray">
+          <thead className="bg-secondary ">
             <tr>
               <th className="py-2 px-2 text-left">번호</th>
               <th className="py-2 px-2 text-left">제목</th>
@@ -67,7 +67,7 @@ export default function MyPosts() {
           </thead>
           <tbody>
             {posts.map((post, idx) => (
-              <tr key={post._id} className="border-b border-gray-300 text-dark-gray">
+              <tr key={post._id} className="border-b border-gray-300 ">
                 <td className="py-2 px-2 lg:py-4 lg:px-4">{idx + 1}</td>
                 <td className="py-2 px-2 lg:py-4 lg:px-4">{post.title}</td>
                 <td className="py-2 px-2 lg:py-4 lg:px-4">{post.type}</td>

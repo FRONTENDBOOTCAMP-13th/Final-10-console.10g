@@ -1,5 +1,6 @@
 export interface UserExtra {
   birthday?: string;
+  address?: UserAddress[];
 }
 
 export interface UserImage {
@@ -46,4 +47,13 @@ export interface User {
   createdAt: string;
   updatedAt: string;
   extra?: UserExtra;
+}
+
+export interface UserAddress {
+  id: number;
+  name: string;
+  recipient: string;
+  value: string;
+  mobile: string;
+  isDefault: boolean;
 }

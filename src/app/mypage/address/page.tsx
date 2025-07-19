@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 
 type Address = {
@@ -10,34 +11,11 @@ type Address = {
   mobile: string;
   isDefault: boolean;
 };
-const mockAddresses: Address[] = [
-  {
-    id: 1,
-    deliveryName: '집',
-    recipient: '황유빈',
-    address: '(18279) 경기 화성시 남양읍 현대아파트 324번길 5 23동 1203호',
-    mobile: '010-1234-1234',
-    isDefault: true,
-  },
-  {
-    id: 2,
-    deliveryName: '회사',
-    recipient: '황유빈',
-    address: '(04512) 서울 중구 을지로 100',
-    mobile: '010-5678-9101',
-    isDefault: false,
-  },
-];
 
 export default function Address() {
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [showAddress, setShowAddress] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
-
-  const handleAddAddress = () => {
-    setAddresses(mockAddresses);
-    setShowAddress(true);
-  };
 
   const toggleDefault = (id: number) => {
     setAddresses(prev => prev.map(addr => (addr.id === id ? { ...addr, isDefault: !addr.isDefault } : { ...addr, isDefault: false })));
@@ -47,13 +25,6 @@ export default function Address() {
     setSelectedIds(prev => (prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]));
   };
 
-  const handleDeleteSelected = () => {
-    const updated = addresses.filter(addr => !selectedIds.includes(addr.id));
-    setAddresses(updated);
-    setSelectedIds([]);
-    if (updated.length === 0) setShowAddress(false);
-  };
-
   const handleDelete = (id: number) => {
     const updated = addresses.filter(addr => addr.id !== id);
     setAddresses(updated);
@@ -61,9 +32,9 @@ export default function Address() {
   };
 
   return (
-    <div className="w-full p-2 sm:p-4 mt-4">
+    <div className="w-full p-2 sm:p-4 mt-4 text-dark-gray">
       {/* 타이틀 */}
-      <div className="mb-2 sm:mb-4 lg:mb-8">
+      <div className="mb-2 sm:mb-4 lg:mb-4">
         <h2 className="font-bold text-base sm:text-lg lg:text-xl">배송 주소록 관리</h2>
       </div>
 
@@ -74,7 +45,7 @@ export default function Address() {
         <div className="space-y-4 sm:space-y-0 sm:table w-full rounded sm:border-none">
           {/* 헤더 (데스크탑) */}
           <div className="hidden sm:table-header-group">
-            <div className="table-row text-sm sm:text-xs lg:text-base  font-bold text-dark-gray">
+            <div className="table-row text-sm sm:text-xs lg:text-base  font-bold ">
               {['선택', '대표배송지', '배송지명', '수령인', '휴대전화', '주소', '관리'].map((col, idx) => (
                 <div key={idx} className="table-cell text-center px-3 py-2 whitespace-nowrap border-b border-gray">
                   {col}
@@ -122,7 +93,7 @@ export default function Address() {
               </div>
 
               {/* 모바일 */}
-              <div className="sm:hidden px-2 py-1 text-dark-gray text-sm">
+              <div className="sm:hidden px-2 py-1  text-sm">
                 <p className="py-1 font-medium">
                   {addr.deliveryName} / {addr.recipient}
                 </p>
@@ -130,16 +101,16 @@ export default function Address() {
               </div>
 
               {/* 배송지명 */}
-              <div className="hidden sm:table-cell px-2 py-1 lg:text-sm text-dark-gray text-sm text-center">{addr.deliveryName}</div>
+              <div className="hidden sm:table-cell px-2 py-1 lg:text-sm y text-sm text-center">{addr.deliveryName}</div>
 
               {/* 수령인 */}
-              <div className="hidden sm:table-cell px-2 py-1 lg:text-sm text-dark-gray text-sm text-center">{addr.recipient}</div>
+              <div className="hidden sm:table-cell px-2 py-1 lg:text-sm  text-sm text-center">{addr.recipient}</div>
 
               {/* 데스크탑: 휴대번호 */}
-              <div className="hidden sm:table-cell px-2 py-1 text-dark-gray text-sm sm:text-xs lg:text-sm text-center  whitespace-nowrap">{addr.mobile}</div>
+              <div className="hidden sm:table-cell px-2 py-1  text-sm sm:text-xs lg:text-sm text-center  whitespace-nowrap">{addr.mobile}</div>
 
               {/* 주소 */}
-              <div className="sm:table-cell px-2 py-1 sm:p-2  text-dark-gray text-sm sm:text-xs lg:text-sm">{addr.address}</div>
+              <div className="sm:table-cell px-2 py-1 sm:p-2   text-sm sm:text-xs lg:text-sm">{addr.address}</div>
 
               {/* 관리 버튼 (데스크탑) */}
               <div className="hidden sm:flex sm:flex-col px-2 py-2 text-center sm:space-y-1">
@@ -159,21 +130,16 @@ export default function Address() {
       <div className="flex justify-between mt-4">
         {/* 데스크탑: 양쪽 배치 */}
         <div className="hidden sm:flex  justify-between w-full">
-          {addresses.length > 0 && (
-            <button onClick={handleDeleteSelected} className="cursor-pointer px-4 py-2 border rounded text-sm text-gray-700">
-              선택 주소록 삭제
-            </button>
-          )}
-          <button onClick={handleAddAddress} className="cursor-pointer px-4 py-2 bg-dark-gray text-white rounded text-sm">
+          <Link href="/mypage/address/add" className="cursor-pointer px-4 py-2 bg-dark-gray text-white rounded text-sm">
             배송지 등록
-          </button>
+          </Link>
         </div>
 
         {/* 모바일: 등록 버튼만 */}
         <div className="sm:hidden w-full">
-          <button onClick={handleAddAddress} className="w-full cursor-pointer px-4 py-2 bg-dark-gray text-white rounded text-sm">
+          <Link href="/mypage/address/add" className="cursor-pointer px-4 py-2 bg-dark-gray text-white rounded text-sm">
             배송지 등록
-          </button>
+          </Link>
         </div>
       </div>
     </div>
