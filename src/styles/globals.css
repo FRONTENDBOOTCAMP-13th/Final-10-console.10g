@@ -1,0 +1,52 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-background: #faf7f2;
+  --color-primary: #a97452;
+  --color-primary-dark: #7a543c;
+  --color-primary-light: #e5cbb7;
+  --color-secondary: #f5eee6;
+  --color-secondary-green: #6c8c53;
+  --color-dark-gray: #333333;
+  --color-gray: #757575;
+  --color-light-gray: #cdcdcd;
+  --color-soft-gray: #efefef;
+  --color-red: #ff0000;
+  --color-yellow: #ffd56b;
+  --color-light-yellow: #ffe599;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 크롬, 사파리 등 Webkit 브라우저 스크롤바 숨기기 */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox */
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+/* IE, Edge */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+}
+/* globals.css */
+.scrollbar-hide {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE 10+ */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Edge */
+}
