@@ -50,27 +50,66 @@ export default function NotificationIcon({ isMobile = false }: { isMobile?: bool
 
   // 알림 불러오기
   useEffect(() => {
-    if (!user?.token?.accessToken) {
-      return;
-    }
+    if (!user?.token?.accessToken) return;
+
+    let intervalId: ReturnType<typeof setInterval> | null = null;
+    let isFetching = false;
+
     const fetchNotification = async () => {
+      if (isFetching) return;
+      isFetching = true;
       try {
         const res = await getUserNotifications(user.token.accessToken);
         if (res.ok) {
-          const data: Notification[] | null = [];
-          res.item.map(note => {
+          const data: Notification[] = [];
+          res.item.forEach(note => {
             if (!note.isRead) data.push(note);
           });
           setNotifications(data);
-        } else throw '알림 불러오기 실패';
+        } else {
+          throw '알림 불러오기 실패';
+        }
       } catch (err) {
         console.error(err);
+      } finally {
+        isFetching = false;
       }
     };
-    fetchNotification();
-    // 10초마다 polling
-    const intervalId = setInterval(fetchNotification, 10000);
-    return () => clearInterval(intervalId); // cleanup
+
+    // polling 시작
+    const startPolling = () => {
+      if (intervalId) clearInterval(intervalId);
+      fetchNotification(); // 포커스 복귀 시 즉시 한 번 호출
+      intervalId = setInterval(fetchNotification, 10000);
+    };
+
+    // polling 중단
+    const stopPolling = () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
+
+    // 최초 시작
+    startPolling();
+
+    // visibility change 처리
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopPolling();
+      } else {
+        startPolling();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // cleanup
+    return () => {
+      stopPolling();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, [user]);
 
   // 모바일 버전
