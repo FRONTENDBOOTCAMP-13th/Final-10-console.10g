@@ -107,8 +107,8 @@ export default function ResidentCard() {
   if (!user) return <div>Loading...</div>;
 
   return (
-    <div className="relative w-80 h-35 sm:w-120 sm:h-50 lg:w-150 lg:h-60 bg-[#E7D8CC] rounded-md shadow-lg flex items-center justify-center">
-      <div className="relative rounded-xl">
+    <div className="relative w-full h-fit flex items-center justify-center py-8">
+      <div className="relative rounded-md border border-primary w-fit">
         <Image loader={imageLoader} src="/mypage-greencard.png" alt="Green Card" className="rounded-lg w-75 h-30 sm:w-115 sm:h-45 lg:w-140 lg:h-55 object-cover" width={280} height={100} priority />
 
         {/* 프로필 버튼 */}

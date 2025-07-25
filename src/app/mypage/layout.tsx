@@ -1,22 +1,29 @@
+import Breadcrumb from '@/components/common/Breadcrumb';
+import MyPageNav from '@/components/mypage/MypageNav';
 import Link from 'next/link';
 
 export default function MyPageLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <div className="flex flex-col-reverse sm:flex-row max-w-[1200px] mx-auto">
+      <main className="flex flex-col-reverse sm:flex-row sm:justify-between max-w-[1200px] mx-auto p-8 gap-4 text-xs sm:text-sm lg:text-base">
         {/* Sidebar */}
-        <aside className="text-dark-gray w-full sm:w-40 lg:w-50 p-3">
-          <nav className="space-y-5 flex flex-col text-xs sm:text-sm lg:text-base">
-            <Link href="/mypage/myposts">내가 쓴 글</Link>
-            <Link href="/mypage/address">배송 주소록 관리</Link>
-            <Link href="/mypage/wishlist">관심 상품</Link>
-            <Link href="/mypage/edit-info">회원 정보 수정</Link>
-            <Link href="/mypage/logout">로그아웃</Link>
+        <aside className="text-dark-gray w-full sm:w-52 lg:w-64">
+          <Breadcrumb
+            items={[
+              { label: '홈', href: '/' },
+              { label: '마이페이지', href: '/mypage' },
+            ]}
+          />
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#A97452] py-2 mb-8">
+            <Link href="/mypage">마이페이지</Link>
+          </h2>
+          <nav>
+            <MyPageNav />
           </nav>
         </aside>
         {/* Content */}
-        <main className="flex-1">{children}</main>
-      </div>
+        <section className="w-full">{children}</section>
+      </main>
     </>
   );
 }
