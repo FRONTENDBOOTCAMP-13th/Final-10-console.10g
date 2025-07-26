@@ -1,6 +1,7 @@
 export interface UserExtra {
   intro?: string;
   address?: UserAddress[];
+  receiveEmail: boolean;
 }
 
 export interface UserImage {

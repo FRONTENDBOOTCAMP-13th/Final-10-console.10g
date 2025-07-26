@@ -7,7 +7,6 @@ export interface AgreementMap {
   privacy: boolean;
   thirdParty: boolean;
   optionalPrivacy: boolean;
-  sms: boolean;
   email: boolean;
 }
 
@@ -28,7 +27,6 @@ export default function AgreementSection({ agreements, setAgreements, showError 
         privacy: newValue,
         thirdParty: newValue,
         optionalPrivacy: newValue,
-        sms: newValue,
         email: newValue,
       });
     } else {
@@ -72,11 +70,6 @@ export default function AgreementSection({ agreements, setAgreements, showError 
       <label className="flex items-center gap-2 cursor-pointer">
         <input type="checkbox" checked={agreements.optionalPrivacy} onChange={() => handleChange('optionalPrivacy')} className="w-4 h-4 accent-amber-100" />
         [선택] 개인정보 수집 및 서비스 활용 동의
-      </label>
-
-      <label className="flex items-center gap-2 cursor-pointer">
-        <input type="checkbox" checked={agreements.sms} onChange={() => handleChange('sms')} className="w-4 h-4 accent-amber-100" />
-        [선택] 마케팅 정보 SMS 수신 동의
       </label>
 
       <label className="flex items-center gap-2 cursor-pointer">

@@ -30,7 +30,9 @@ export async function createUser(_: ApiRes<User> | null, formData: FormData): Pr
     password: formData.get('password') as string | null,
     birthday: formData.get('birthday') as string | null,
     phone: (formData.get('phone1') as string) + (formData.get('phone2') as string) + (formData.get('phone3') as string),
-
+    extra: {
+      receiveEmail: formData.get('receiveEmail') === 'true',
+    },
     ...(image ? { image } : {}),
   };
   console.log('회원가입 요청 body:', body);

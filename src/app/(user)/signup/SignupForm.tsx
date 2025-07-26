@@ -27,6 +27,7 @@ export interface SignupFormValues {
   phone2: string;
   phone3: string;
   attach?: FileList;
+  receiveEmail: boolean;
 }
 
 // 이메일 중복확인 API 응답 타입 정의
@@ -70,7 +71,6 @@ export default function SignupForm() {
     privacy: false,
     thirdParty: false,
     optionalPrivacy: false,
-    sms: false,
     email: false,
   });
 
@@ -105,7 +105,7 @@ export default function SignupForm() {
       return;
     }
 
-    const formData = convertToFormData({ ...data, type: 'user' });
+    const formData = convertToFormData({ ...data, type: 'user', receiveEmail: agreements.email });
 
     try {
       // createUser API 호출 (서버에 회원가입 요청)
