@@ -30,9 +30,9 @@ interface FormState {
   postcode: string;
   address: string;
   detailAddress: string;
-  mobile1: string; 
-  mobile2: string; 
-  mobile3: string; 
+  mobile1: string;
+  mobile2: string;
+  mobile3: string;
   isDefault: boolean;
 }
 
@@ -185,22 +185,27 @@ export default function EditAddress() {
     <div className="w-full mx-auto p-4 mt-4 text-dark-gray">
       <h2 className="font-bold text-lg mb-4">배송 주소록 수정</h2>
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="grid grid-cols-[100px_1fr_auto] sm:grid-cols-[150px_minmax(300px,300px)_150px] lg:grid-cols-[200px_minmax(200px,350px)_150px] gap-y-4 sm:gap-y-6 lg:gap-y-6 gap-x-2"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-[100px_1fr_auto] sm:grid-cols-[minmax(70px,150px)_minmax(150px,auto)_100px] lg:grid-cols-[200px_minmax(200px,auto)_150px] gap-y-4 sm:gap-y-6 lg:gap-y-6 gap-x-2">
         {/* 배송지명 */}
-        <label className="self-center">배송지명 <span className="text-red">*</span></label>
+        <label className="self-center">
+          배송지명 <span className="text-red">*</span>
+        </label>
         <input {...register('deliveryName', { required: true })} placeholder="예) 집, 회사" className="border rounded px-2 py-2 col-span-2" />
 
         {/* 수령인 */}
-        <label className="self-center">수령인 <span className="text-red">*</span></label>
+        <label className="self-center">
+          수령인 <span className="text-red">*</span>
+        </label>
         <input {...register('recipient', { required: true })} className="border rounded px-2 py-2 col-span-2" />
 
         {/* 주소 */}
-        <label className="self-center">주소 <span className="text-red">*</span></label>
+        <label className="self-center">
+          주소 <span className="text-red">*</span>
+        </label>
         <input {...register('postcode', { required: true })} placeholder="우편번호" readOnly className="border rounded px-2 py-2" />
-        <button type="button" onClick={handleAddressSearch} className="bg-primary text-white rounded px-4 py-2">주소 검색</button>
+        <button type="button" onClick={handleAddressSearch} className="bg-primary text-white rounded px-4 py-2">
+          주소 검색
+        </button>
 
         <div></div>
         <input {...register('address', { required: true })} placeholder="기본 주소" readOnly className="border rounded px-2 py-2 col-span-2" />
@@ -209,7 +214,9 @@ export default function EditAddress() {
         <input {...register('detailAddress')} placeholder="상세 주소" className="border rounded px-2 py-2 col-span-2" />
 
         {/* 휴대전화 */}
-        <label className="self-center">휴대전화 <span className="text-red">*</span></label>
+        <label className="self-center">
+          휴대전화 <span className="text-red">*</span>
+        </label>
         <div className="flex gap-2 col-span-2">
           <select {...register('mobile1', { required: true })} className="border rounded px-2 py-2 w-20">
             <option value="010">010</option>
@@ -219,16 +226,8 @@ export default function EditAddress() {
             <option value="018">018</option>
             <option value="019">019</option>
           </select>
-          <input
-            {...register('mobile2', { required: true, maxLength: 4 })}
-            placeholder="중간번호"
-            className="border rounded px-2 py-2 w-24"
-          />
-          <input
-            {...register('mobile3', { required: true, maxLength: 4 })}
-            placeholder="끝번호"
-            className="border rounded px-2 py-2 w-24"
-          />
+          <input {...register('mobile2', { required: true, maxLength: 4 })} placeholder="중간번호" className="border rounded px-2 py-2 w-24" />
+          <input {...register('mobile3', { required: true, maxLength: 4 })} placeholder="끝번호" className="border rounded px-2 py-2 w-24" />
         </div>
 
         {/* 기본 배송지 */}

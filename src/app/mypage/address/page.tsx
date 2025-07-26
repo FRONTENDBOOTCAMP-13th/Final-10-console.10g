@@ -131,39 +131,12 @@ export default function Address() {
       {!showAddress ? (
         <p className="text-gray text-xs sm:text-sm lg:text-base">등록된 주소가 없습니다.</p>
       ) : (
-        <div className="space-y-4 sm:table w-full rounded sm:border-none">
-          {/* 헤더 */}
-          <div className="hidden sm:table-header-group">
-            <div className="table-row text-sm lg:text-base text-center font-bold whitespace-nowrap">
-              {['선택', '대표배송지', '배송지명', '수령인', '휴대전화', '주소', '관리'].map((col, idx) => (
-                <div key={idx} className="table-cell px-2 py-1 border-b border-gray">
-                  {col}
-                </div>
-              ))}
-            </div>
-          </div>
-
+        <ul className="space-y-4 sm:table w-full rounded sm:border-none">
           {/* 주소 목록 */}
           {addresses.map(addr => (
-            <div key={addr.id} className="sm:table-row border py-2 border-dark-gray ">
-              {/* 체크박스 (데스크탑) */}
-              <div className="hidden sm:table-cell px-2 py-1 text-center align-middle">
-                <input type="checkbox" checked={selectedIds.includes(addr.id)} onChange={() => toggleSelect(addr.id)} className="accent-primary w-4 h-4" />
-              </div>
-
-              {/* 대표배송지 토글 (데스크탑) */}
-              <div className="hidden sm:table-cell px-2 py-1 text-center align-middle">
-                <button
-                  onClick={() => handleSetDefault(addr.id)}
-                  className={`cursor-pointer px-2 py-1 rounded text-xs lg:text-sm font-medium 
-                  ${addr.isDefault ? 'bg-primary text-background' : 'border border-primary bg-background text-primary'}`}
-                >
-                  {addr.isDefault ? '고정' : '해제'}
-                </button>
-              </div>
-
-              {/* 모바일: 대표배송지 토글 */}
-              <div className="flex justify-between items-center sm:hidden px-2 py-1 align-middle">
+            <li key={addr.id} className="border p-4 border-dark-gray ">
+              <input type="checkbox" checked={selectedIds.includes(addr.id)} onChange={() => toggleSelect(addr.id)} className="accent-primary w-4 h-4 m-2" />
+              <div className="flex justify-between items-center px-2 py-1 align-middle">
                 <button
                   onClick={() => handleSetDefault(addr.id)}
                   className={`cursor-pointer px-2 py-1 rounded text-xs  font-medium 
@@ -180,41 +153,17 @@ export default function Address() {
                   </button>
                 </div>
               </div>
-
-              {/* 모바일 */}
-              <div className="sm:hidden px-2 py-1 text-sm align-middle space-y-2">
+              <div className="px-2 py-1 text-sm align-middle space-y-2">
                 <p>
                   {addr.name} / {addr.recipient}
                 </p>
+                <p>{addr.value}</p>
+                <p>{addr.detailAddress}</p>
                 <p>{addr.mobile}</p>
               </div>
-
-              {/* 배송지명 */}
-              <div className="hidden sm:table-cell px-2 py-1 text-sm lg:text-base text-center align-middle">{addr.name}</div>
-
-              {/* 수령인 */}
-              <div className="hidden sm:table-cell px-2 py-1 text-sm lg:text-base text-center align-middle">{addr.recipient}</div>
-
-              {/* 휴대전화 */}
-              <div className="hidden sm:table-cell px-2 py-1 text-sm lg:text-base text-center align-middle">{addr.mobile}</div>
-
-              {/* 주소 */}
-              <div className="sm:table-cell px-2 py-1 text-sm lg:text-base align-middle">
-                {addr.value} {addr.detailAddress ? ` ${addr.detailAddress}` : ''}
-              </div>
-
-              {/* 관리 버튼 (데스크탑) */}
-              <div className="hidden sm:flex sm:flex-col px-2 py-1 text-center space-y-1 lg:space-y-2">
-                <Link href={`/mypage/address/edit/${addr.id}`} className="cursor-pointer border text-sm px-2 py-1 whitespace-nowrap rounded inline-block text-center">
-                  수정
-                </Link>
-                <button className="cursor-pointer border px-2 py-1 whitespace-nowrap text-sm rounded text-red" onClick={() => handleDelete(addr.id)}>
-                  삭제
-                </button>
-              </div>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
 
       {/* 버튼 영역 */}

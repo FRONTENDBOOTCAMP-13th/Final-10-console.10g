@@ -70,23 +70,28 @@ export default function MyPosts() {
 
             {/* 태블릿/데스크탑 테이블형 */}
             <table className="hidden sm:table w-full text-sm lg:text-base border-t border-gray">
+              <colgroup>
+                <col width="15%" />
+                <col width="50%" />
+                <col width="15%" />
+                <col width="20%" />
+              </colgroup>
+
               <thead className="bg-secondary">
                 <tr>
-                  <th className="py-2 px-2 text-left">번호</th>
-                  <th className="py-2 px-2 text-left">제목</th>
-                  <th className="py-2 px-2 text-left">분류</th>
-                  <th className="py-2 px-2 text-left">작성자</th>
-                  <th className="py-2 px-2 text-left">작성일</th>
+                  <th className="py-2 px-2">번호</th>
+                  <th className="py-2 px-2">제목</th>
+                  <th className="py-2 px-2">분류</th>
+                  <th className="py-2 px-2">작성일</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredPosts.map((post, idx) => (
                   <tr key={post._id} className="border-b border-gray-300 cursor-pointer hover:bg-gray-100" onClick={() => router.push(`/board/${post.type}/${post._id}`)}>
-                    <td className="py-2 px-2 lg:py-4 lg:px-4">{idx + 1}</td>
-                    <td className="py-2 px-2 lg:py-4 lg:px-4">{post.title}</td>
-                    <td className="py-2 px-2 lg:py-4 lg:px-4">{post.type}</td>
-                    <td className="py-2 px-2 lg:py-4 lg:px-4">{post.user.name}</td>
-                    <td className="py-2 px-2 lg:py-4 lg:px-4">{post.createdAt.slice(0, 10)}</td>
+                    <td className="py-2 px-2 lg:py-4 lg:px-4 text-center">{idx + 1}</td>
+                    <td className="py-2 px-2 lg:py-4 lg:px-4 truncate">{post.title}</td>
+                    <td className="py-2 px-2 lg:py-4 lg:px-4 text-center">{post.type}</td>
+                    <td className="py-2 px-2 lg:py-4 lg:px-4 text-center">{post.createdAt.slice(0, 10)}</td>
                   </tr>
                 ))}
               </tbody>

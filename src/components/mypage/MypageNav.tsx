@@ -11,7 +11,7 @@ export default function MyPageNav() {
       <li className={`p-4 border-t border-light-gray ${pathname === '/mypage/myposts' ? 'text-primary font-bold' : ''}`}>
         <Link href="/mypage/myposts">내가 쓴 글</Link>
       </li>
-      <li className={`p-4 border-t border-light-gray ${pathname === '/mypage/address' ? 'text-primary font-bold' : ''}`}>
+      <li className={`p-4 border-t border-light-gray ${pathname.startsWith('/mypage/address') ? 'text-primary font-bold' : ''}`}>
         <Link href="/mypage/address">배송 주소록 관리</Link>
       </li>
       <li className={`p-4 border-t border-light-gray ${pathname === '/mypage/wishlist' ? 'text-primary font-bold' : ''}`}>
