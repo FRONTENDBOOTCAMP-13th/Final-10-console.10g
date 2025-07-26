@@ -1,107 +1,74 @@
 'use client';
 
-import { getUserAddress } from '@/utils/getUsers';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useLoginStore } from '@/stores/loginStore';
+import { useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 interface Props {
-  onFetched: (address: { name: string; value: string; memo: string }) => void;
+  name: string;
+  recipient: string;
+  phone: string;
+  address: string;
 }
 
-export default function OrderUserInfo({ onFetched }: Props) {
-  const router = useRouter();
-  const loginUser = useLoginStore(state => state.user);
+export default function OrderUserInfo({ name, recipient, phone, address }: Props) {
   const { register, setValue, watch } = useFormContext();
+  const memo = watch('memo');
 
-  const [user, setUser] = useState<null | {
-    name: string;
-    phone: string;
-    address: string;
-  }>(null);
-  const [memoOption, setMemoOption] = useState('');
-  const memoValue = watch('memo', '');
-  const memoOptions = ['-- 메시지 선택 (선택사항) --', '문 앞에 놓아주세요', '부재 시 연락 부탁드려요', '배송 전 미리 연락부탁드려요', '직접 입력'];
+  const predefinedOptions = ['문 앞에 놓아주세요', '부재 시 연락 부탁드려요', '배송 전 미리 연락부탁드려요'];
+  const isPredefined = predefinedOptions.includes(memo);
 
-  useEffect(() => {
-    async function fetchUser() {
-      if (!loginUser?._id || !loginUser.token?.accessToken) return;
-
-      const res = await getUserAddress(loginUser._id, loginUser.token.accessToken);
-
-      if (res.ok && res.item) {
-        const defaultAddress = res.item.find(a => a.isDefault);
-        const selectedAddress = defaultAddress ?? res.item[0];
-
-        if (selectedAddress) {
-          setUser({
-            name: selectedAddress.recipient,
-            phone: loginUser.phone,
-            address: selectedAddress.value,
-          });
-
-          onFetched({
-            name: selectedAddress.name,
-            value: selectedAddress.value,
-            memo: memoOption !== '직접 입력' ? memoOption : memoValue,
-          });
-          return;
-        }
-      }
-
-      alert('배송지가 등록되어 있지 않습니다. 배송지를 먼저 등록해주세요.');
-      router.push('/mypage/address/add');
-    }
-    fetchUser();
-  }, [loginUser]);
-
-  function formatUserInfo(phone: string, address: string) {
-    const formattedPhone = phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-    const match = address.match(/^(\d{5})\s*(.+)$/);
-    const formattedAddress = match ? `[${match[1]}] ${match[2]}` : address;
-
-    return {
-      phone: formattedPhone,
-      address: formattedAddress,
-    };
-  }
+  const isInitial = useRef(true);
 
   const handleMemoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
-    setMemoOption(value);
+    isInitial.current = false;
 
-    if (value !== '직접 입력') {
-      setValue('memo', value);
-    } else {
+    const value = e.target.value;
+    if (value === '직접 입력') {
       setValue('memo', '');
+    } else {
+      setValue('memo', value);
     }
   };
 
-  if (!user) return <p>유저 정보 로드 중...</p>;
-  const { phone, address } = formatUserInfo(user.phone, user.address);
+  const memoOption = isInitial.current && memo === '' ? '' : isPredefined ? memo : '직접 입력';
+
+  const formatPhone = phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+  const formattedAddress = (() => {
+    const match = address.match(/^(\d{5})\s*(.+)$/);
+    return match ? `[${match[1]}] ${match[2]}` : address;
+  })();
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 space-y-3 rounded-xl sm:rounded-2xl sm:space-y-4 lg:space-y-4 lg:rounded-3xl bg-white">
-      <div className="space-y-2 text-xs sm:text-sm lg:text-base">
-        <p className="font-semibold text-sm sm:text-base lg:text-lg">{user.name}</p>
-        <p>{phone}</p>
-        <p>{address}</p>
+    <div className="p-4 sm:p-6 lg:p-8 space-y-2 rounded-xl sm:rounded-2xl sm:space-y-4 lg:space-y-4 lg:rounded-3xl bg-white text-dark-gray">
+      <div className="text-base sm:text-lg font-semibold">배송정보</div>
+
+      <div className="space-y-2 text-sm sm:text-base">
+        <p className="font-semibold  sm:text-base ">
+          <span>[{name}]</span> {recipient}
+        </p>
+        <p>{formatPhone}</p>
+        <p>{formattedAddress}</p>
       </div>
 
-      <div className="space-y-2 sm:space-y-2 lg:space-y-4 text-xs sm:text-sm lg:text-base">
-        <select value={memoOption} onChange={handleMemoChange} className="w-full border border-primary focus:outline-none focus:ring-0 focus:border-primary rounded px-1 py-1 sm:px-2 sm:py-2 lg:px-2 lg:py-2">
+      <div className="space-y-2 sm:space-y-3 lg:space-y-4">
+        <select value={memoOption} onChange={handleMemoChange} className="w-full border border-primary text-xs sm:text-sm lg:text-base rounded px-1 py-1 sm:px-2 sm:py-2">
           <option value="" disabled hidden>
             -- 메시지 선택 (선택사항) --
           </option>
-          {memoOptions.map(opt => (
+          {predefinedOptions.map(opt => (
             <option key={opt} value={opt}>
               {opt}
             </option>
           ))}
+          <option value="직접 입력">직접 입력</option>
         </select>
-        {memoOption === '직접 입력' && <textarea {...register('memo')} value={memoValue} onChange={e => setValue('memo', e.target.value)} placeholder="배송 시 요청사항을 입력해주세요" className="w-full border border-primary rounded px-4 py-2 h-24" maxLength={50} />}
-        {memoOption === '직접 입력' && <p className="text-right text-xs sm:text-sm lg:text-base text-gray">{memoValue.length}/50</p>}
+
+        {memoOption === '직접 입력' && (
+          <>
+            <textarea {...register('memo')} placeholder="배송 시 요청사항을 입력해주세요" className="w-full border text-xs sm:text-sm lg:text-base border-primary rounded px-2 py-2 sm:px-3 h-24" maxLength={50} />
+            <p className="text-right text-xs text-gray">{memo?.length || 0}/50</p>
+          </>
+        )}
       </div>
     </div>
   );

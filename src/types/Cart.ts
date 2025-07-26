@@ -6,10 +6,10 @@ interface CartProduct extends Product {
 
 export interface CartItem {
   _id: number;
-  product_id: number;
+  product_id?: number;
   quantity: number;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
   product: CartProduct;
 }
 

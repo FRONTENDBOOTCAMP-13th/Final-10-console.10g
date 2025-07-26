@@ -1,9 +1,5 @@
 import { Product } from './Product';
 
-export interface OrderExtra {
-  memo?: string;
-}
-
 export interface OrderCost {
   products: number;
   shippingFees: number;
@@ -34,4 +30,12 @@ export interface OrderForm {
     value: string;
   };
   memo?: string;
+}
+
+export interface OrderResponse extends Order {
+  address: {
+    name: string;
+    value: string;
+  };
+  memo: string;
 }
