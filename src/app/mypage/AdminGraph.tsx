@@ -157,7 +157,7 @@ export default function AdminGraph() {
   };
   // w-full sm:w-[40rem] lg:w-[50rem] bg-white h-full mx-auto px-10 sm:p-10 sm:pb-80 lg:pb-96 sm:rounded-2xl lg:rounded-3xl
   return (
-    <section className="flex flex-col flex-nowrap gap-40">
+    <section className="flex flex-col flex-nowrap gap-40 pb-40">
       <article className="w-full lg:w-[50rem] mx-auto h-[20rem]">
         {/* 타이틀 */}
         <div className="flex flex-col flex-nowrap px-4 sm:px-0 pb-4">
