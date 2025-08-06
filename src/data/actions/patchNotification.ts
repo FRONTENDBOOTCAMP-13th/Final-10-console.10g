@@ -36,7 +36,7 @@ export async function patchNotificationId(user: LoginUser, notificationId: strin
     const data = await res.json();
     return data;
   } catch (error) {
-    console.log('patchUserAddresses 에러:', error);
+    console.error('patchUserAddresses 에러:', error);
     return { ok: 0, message: '주소 업데이트 실패' };
   }
 }

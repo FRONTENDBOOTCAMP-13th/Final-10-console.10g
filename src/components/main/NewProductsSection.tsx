@@ -88,13 +88,17 @@ export default function NewProductsSection() {
       if (!accessToken) return;
       try {
         const resLiked = await getLikedProducts(accessToken);
-        const liked = Object.values(resLiked)
-          .filter((v): v is { _id: number; product: Product } => typeof v === 'object' && v !== null && 'product' in v && '_id' in v)
-          .map(v => ({
-            ...v.product,
-            bookmarkId: v._id,
-          }));
-        setLikedProducts(liked);
+        if (!resLiked.ok) {
+          throw resLiked.message;
+        }
+
+        const items = resLiked.item as unknown as { _id: number; product: Product }[];
+
+        const products = items.map(v => ({
+          ...v.product,
+          bookmarkId: v._id,
+        }));
+        setLikedProducts(products);
       } catch (error) {
         console.error('liked products 재로드 실패:', error);
       }

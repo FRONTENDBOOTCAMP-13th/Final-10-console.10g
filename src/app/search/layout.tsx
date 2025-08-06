@@ -34,7 +34,7 @@ export default function SearchLayout({ children }: Readonly<{ children: React.Re
           setProducts(copySlice);
         }
       } catch {
-        console.log('실패');
+        console.error('조회 실패');
       }
     };
     fetchProducts();

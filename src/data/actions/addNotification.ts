@@ -39,7 +39,6 @@ export async function createPaymentNotification(product: Product, image: Product
 
     const data = await res.json();
 
-    console.log('알림 추가 성공!');
     return data;
   } catch (error) {
     console.error(error);
@@ -97,7 +96,6 @@ export async function createReplyNotification(post: Post, targetUser: User, crea
 
     const data = await res.json();
 
-    console.log(`${targetUser.name}에게 알림 추가 성공!`);
     return data;
   } catch (error) {
     console.error(error);
@@ -129,7 +127,7 @@ export async function createMessage(content: string, targetUser: User, createUse
 
     const data = await res.json();
 
-    console.log(`${targetUser.name}에게 알림 추가 성공!`);
+  
     return data;
   } catch (error) {
     console.error(error);

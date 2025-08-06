@@ -85,7 +85,7 @@ export default function AdminGraph() {
         setShowUserSignUpData(aggregatedDate);
         setShowUserAreaData(aggregatedArea);
       } else {
-        console.log('유저 정보 불러오기 실패');
+        console.error('유저 정보 불러오기 실패');
       }
     };
 
@@ -109,7 +109,7 @@ export default function AdminGraph() {
 
         setStatistics({ totalQuantity: totalQuantity, totalSales: totalSales });
       } else {
-        console.log(res);
+        console.error(res.message);
       }
     };
 

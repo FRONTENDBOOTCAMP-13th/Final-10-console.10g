@@ -41,17 +41,13 @@ export async function createPost(state: ApiRes<Post> | null, formData: FormData)
       const fileFormData = new FormData();
       validFiles.forEach(file => fileFormData.append('attach', file));
 
-      console.log('[createPost] 파일 업로드 시작, 파일 개수:', validFiles.length);
       const uploadResult = await uploadFile(fileFormData);
-      console.log('[createPost] uploadFile 결과:', uploadResult);
 
       if (uploadResult.ok === 1) {
         const uploadedFiles = uploadResult.item;
-        console.log('[createPost] 업로드된 파일 정보:', uploadedFiles);
 
         // 업로드된 파일들의 전체 URL 경로를 생성하여 image 배열에 저장
         const uploadedPaths = uploadedFiles.map(item => `${item.path}`);
-        console.log(`업로드된 이미지 경로들:`, uploadedPaths);
 
         // Post의 image 필드에 경로 배열 저장
         body.image = uploadedPaths;
@@ -64,7 +60,7 @@ export async function createPost(state: ApiRes<Post> | null, formData: FormData)
       return { ok: 0, message: '이미지 업로드 중 오류가 발생했습니다.' };
     }
   } else {
-    console.log('[createPost] 업로드할 파일이 없습니다.');
+    console.error('[createPost] 업로드할 파일이 없습니다.');
   }
 
   let res: Response;

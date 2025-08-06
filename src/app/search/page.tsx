@@ -62,7 +62,7 @@ export default function SearchPage() {
           }
         } else throw '검색어가 존재하지 않습니다.';
       } catch {
-        console.log('실패');
+        console.error('조회 실패');
       }
     };
     fetchProducts();

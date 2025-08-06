@@ -16,11 +16,10 @@ import { toast } from 'react-hot-toast';
 interface Props {
   post: Post;
   apiUrl: string;
-  clientId: string;
   bookmarkId?: number; // 상위에서 전달받는 북마크 ID (있으면 좋아요된 상태)
 }
 
-export default function CommunityPostCard({ post, clientId, bookmarkId: initialBookmarkId }: Props) {
+export default function CommunityPostCard({ post, bookmarkId: initialBookmarkId }: Props) {
   const user = useLoginStore(state => state.user);
   // 좋아요 여부 및 bookmarkId 상태
   const [isLiked, setIsLiked] = useState(!!initialBookmarkId);
@@ -31,7 +30,7 @@ export default function CommunityPostCard({ post, clientId, bookmarkId: initialB
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // console.log('Post image:', post.image); // 디버깅용
-  console.log(clientId);
+  // console.log(clientId);
 
   // bookmarkId가 props로 바뀌면 상태 동기화
   useEffect(() => {

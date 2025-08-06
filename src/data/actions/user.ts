@@ -17,9 +17,8 @@ export async function createUser(_: ApiRes<User> | null, formData: FormData): Pr
         name: fileRes.item[0].name,
         originalname: fileRes.item[0].originalname,
       };
-      console.log('생성된 image 객체:', image);
     } else {
-      console.log('파일 업로드 실패:', fileRes);
+      console.error('파일 업로드 실패:', fileRes);
       return fileRes;
     }
   } else {
@@ -41,7 +40,6 @@ export async function createUser(_: ApiRes<User> | null, formData: FormData): Pr
     },
     ...(image ? { image } : {}),
   };
-  console.log('회원가입 요청 body:', body);
 
   try {
     const res = await axios.post<ApiRes<User>>(`${API_URL}/users`, body, {

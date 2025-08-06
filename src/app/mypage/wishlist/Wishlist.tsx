@@ -33,8 +33,6 @@ export default function Wishlist() {
       const fetchLiked = async () => {
         const res = await getLikedProducts(user.token.accessToken);
 
-        console.log(res);
-
         if (!res.ok) {
           throw res.message;
         }
@@ -46,8 +44,6 @@ export default function Wishlist() {
           ...v.product,
           bookmarkId: v._id,
         }));
-
-        console.log(products);
 
         setLikedProducts(products);
       };

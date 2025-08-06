@@ -40,10 +40,8 @@ export default function NotificationIcon({ isMobile = false }: { isMobile?: bool
       try {
         await patchNotification(user);
         deleteNotification();
-
-        console.log('알림을 모두 읽었습니다.');
       } catch {
-        console.log('데이터 읽음 처리 실패');
+        console.error('데이터 읽음 처리 실패');
       }
     }
   };
@@ -90,7 +88,6 @@ export default function NotificationIcon({ isMobile = false }: { isMobile?: bool
       isFetching = true;
       try {
         await fetchNotification();
-        console.log('알림 불러오기');
       } catch {
         toast.error('알림 불러오기 실패');
       }
@@ -138,19 +135,16 @@ export default function NotificationIcon({ isMobile = false }: { isMobile?: bool
 
     // 외부 이미지가 문자열이면 바로 반환
     if (typeof user?.image === 'string') {
-      console.log('typeof string:', user.image);
       return user.image;
     }
 
     // image가 객체이고 null이 아님일 때만 접근
     if (typeof user?.image === 'object' && user.image !== null) {
       if (user.image.originalname && user.image.path && API_URL) {
-        console.log('API_URL:', user.image);
         return `${API_URL}/${user.image.path}`;
       }
 
       if (user.image.path) {
-        console.log('이미지 path:', user.image);
         return user.image.path;
       }
     }
@@ -163,7 +157,6 @@ export default function NotificationIcon({ isMobile = false }: { isMobile?: bool
     return fallback;
   };
   const getPostImageSrc = (post: Post | undefined) => {
-    console.log(post);
     if (post?.extra?.imagePath) return post.extra.imagePath;
     return '/default-profile.webp';
   };

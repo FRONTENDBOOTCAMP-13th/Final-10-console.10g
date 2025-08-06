@@ -49,9 +49,7 @@ export default function ImageModal({ isOpen, onClose, images, imageAlt, postId, 
             if (user._id !== targetUserRes.item._id) {
               const notiRes = await createReplyNotification(postRes.item, targetUserRes.item, user);
 
-              if (notiRes.ok) {
-                console.log('댓글 알림이 성공적으로 전송되었습니다.');
-              } else {
+              if (!notiRes.ok) {
                 console.error('알림 전송 실패:', notiRes.message);
               }
             }

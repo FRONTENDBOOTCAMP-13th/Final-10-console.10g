@@ -88,9 +88,6 @@ export default function EditForm() {
     try {
       const result = await patchUserInfo(user._id, user.token.accessToken, { ...newData });
 
-      console.log('result', result);
-      console.log('result.ok', result.ok);
-      console.log('result.item', result.item);
 
       if (result.ok) {
         toast.success('회원 정보 수정이 완료되었습니다.');
@@ -147,7 +144,6 @@ export default function EditForm() {
     try {
       const res = await getUsersEmail(email);
 
-      console.log(res);
 
       if (res.ok) {
         setEmailCheckMessage('사용 가능한 이메일입니다.');

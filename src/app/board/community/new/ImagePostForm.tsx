@@ -23,7 +23,7 @@ export default function ImagePostForm({ boardType }: { boardType: string }) {
 
   const MAX_IMAGES = 5; // 최대 이미지 개수 제한
 
-  console.log(state);
+  // console.log(state);
 
   // 박스 클릭 → 파일선택창 열림
   const onClickBox = () => {

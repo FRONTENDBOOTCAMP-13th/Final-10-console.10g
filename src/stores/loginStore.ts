@@ -57,10 +57,9 @@ export const useLoginStore = create<LoginStore>()(
                 accessToken: res.accessToken,
               },
             };
-            console.log('새로운 유저:', newUser);
             set({ user: newUser });
           } else {
-            console.log('실패.....???');
+            console.error('토큰 재발행 실패');
           }
         }
       },

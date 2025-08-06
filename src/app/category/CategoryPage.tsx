@@ -149,7 +149,7 @@ export default function CategoryPage({ category, title, detailArray, detail, cat
           }
         }
       } catch {
-        console.log('실패');
+        console.error('상품 조회 실패');
       }
     };
     fetchProducts();

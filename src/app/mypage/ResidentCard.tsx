@@ -105,12 +105,7 @@ export default function ResidentCard() {
       toast.success('프로필 이미지가 변경되었습니다!');
 
       setUser(prev => prev && { ...prev, image: `${newImage.path}` });
-      try {
-        console.log(fetchLoginUser);
-        await fetchLoginUser();
-      } catch {
-        console.log('스토어에 저장이 안댐');
-      }
+      await fetchLoginUser();
     } else {
       toast.error('이미지 변경 실패');
     }

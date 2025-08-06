@@ -51,8 +51,6 @@ export default function OrderHistory() {
 
         const ordersData = [...res.item];
         setOrders(ordersData);
-
-        console.log(res.item);
       } catch (error) {
         console.error(error);
       }
@@ -62,8 +60,6 @@ export default function OrderHistory() {
 
   useEffect(() => {
     if (orders) {
-      console.log('orders', orders);
-
       // 상태별 카운트 초기화
       let state1 = 0; // 결제완료
       let state2 = 0; // 배송준비중

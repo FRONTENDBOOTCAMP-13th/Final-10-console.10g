@@ -80,8 +80,6 @@ export default function OrderWrapper() {
     const res = await createOrder(data, token);
 
     if (res.ok) {
-      console.log('주문 성공', res.item);
-
       // 결제 완료 알림 보내기
       try {
         const firstProduct = cartItems[0]?.product;

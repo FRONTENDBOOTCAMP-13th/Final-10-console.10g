@@ -69,19 +69,16 @@ export default function AdminList() {
 
     // 외부 이미지가 문자열이면 바로 반환
     if (typeof user?.image === 'string') {
-      console.log('typeof string:', user.image);
       return user.image;
     }
 
     // image가 객체이고 null이 아님일 때만 접근
     if (typeof user?.image === 'object' && user.image !== null) {
       if (user.image.originalname && user.image.path && API_URL) {
-        console.log('API_URL:', user.image);
         return `${API_URL}/${user.image.path}`;
       }
 
       if (user.image.path) {
-        console.log('이미지 path:', user.image);
         return user.image.path;
       }
     }

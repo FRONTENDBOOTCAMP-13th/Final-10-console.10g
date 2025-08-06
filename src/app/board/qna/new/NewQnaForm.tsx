@@ -41,7 +41,7 @@ export default function NewQnaForm({ boardType }: { boardType: string }) {
               'client-id': process.env.NEXT_PUBLIC_CLIENT_ID || '',
             },
           });
-          console.log('API 호출 응답 상태:', res.status);
+          // console.log('API 호출 응답 상태:', res.status);
           if (res.ok) {
             const data = await res.json();
             setSelectedProduct(data.item);
