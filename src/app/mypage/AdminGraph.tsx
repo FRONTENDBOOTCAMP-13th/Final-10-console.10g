@@ -6,7 +6,6 @@ import { getUsers } from '@/utils/getUsers';
 import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { getAdminStatisticsOrders } from '@/utils/getAdminStatisticsOrders';
 
 // 필수 등록
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -61,9 +60,6 @@ export default function AdminGraph() {
   //   const [orderData, setOrderData] = useState<orderData[]>();
   const [showUserSignUpData, setShowUserSignUpData] = useState<{ date: string; count: number }[]>([]);
   const [showUserAreaData, setShowUserAreaData] = useState<{ area: string; count: number }[]>([]);
-  const [statistics, setStatistics] = useState<{ totalQuantity: number; totalSales: number }>();
-
-  const [totalUserCount, setTotalUserCount] = useState<number>(0);
 
   useEffect(() => {
     if (!user) return;
@@ -79,7 +75,6 @@ export default function AdminGraph() {
           });
         }
 
-        setTotalUserCount(res.item.length);
         const aggregatedDate = aggregateByDate(resUser);
         const aggregatedArea = aggregateByArea(resUser);
         setShowUserSignUpData(aggregatedDate);
@@ -91,30 +86,6 @@ export default function AdminGraph() {
 
     getUserData();
   }, [user]);
-
-  useEffect(() => {
-    if (!user) return;
-
-    const getStatistics = async () => {
-      const res = await getAdminStatisticsOrders(user.token.accessToken);
-
-      if (res.ok) {
-        let totalQuantity = 0;
-        let totalSales = 0;
-
-        res.item.map(elem => {
-          totalQuantity += elem.totalQuantity;
-          totalSales += elem.totalSales;
-        });
-
-        setStatistics({ totalQuantity: totalQuantity, totalSales: totalSales });
-      } else {
-        console.error(res.message);
-      }
-    };
-
-    getStatistics();
-  }, []);
 
   const dataSignUp = {
     labels: showUserSignUpData.map(d => d.date),
@@ -203,22 +174,6 @@ export default function AdminGraph() {
           <p>사용자들의 거주지 분포입니다.</p>
         </div>
         <Line data={dataArea} options={optionsArea} className="w-full" />
-      </article>
-
-      {/* 총 매출량, 총 판매량, 총 회원 수 왜 안나오는지 논의좀... */}
-      <article className="border border-primary-dark w-[95%] mx-auto flex flex-row flex-nowrap justify-center py-8">
-        <div className="flex flex-col flex-nowrap justify-center items-center w-1/3 border-r border-primary-light">
-          <p>총 매출액</p>
-          <p>{statistics?.totalSales.toLocaleString() || '0'}원</p>
-        </div>
-        <div className="flex flex-col flex-nowrap justify-center items-center w-1/3 border-r border-primary-light">
-          <p>총 판매량</p>
-          <p>{statistics?.totalQuantity || '0'}개</p>
-        </div>
-        <div className="flex flex-col flex-nowrap justify-center items-center w-1/3">
-          <p>총 회원수</p>
-          <p>{totalUserCount}명</p>
-        </div>
       </article>
     </section>
   );
