@@ -59,16 +59,30 @@ export async function createPaymentNotification(product: Product, image: Product
  * 결제 완료 알림을 생성하고, 성공 시 POST 이후 반환된 Res객체를 받습니다.
  * 실패 시 에러 메시지를 반환합니다.
  */
-export async function createReplyNotification(post: Post, targetUser: User, createUser: LoginUser) {
-  const body = {
-    type: 'reply',
-    target_id: targetUser._id,
-    content: `${createUser.name}님이 댓글을 남기셨습니다.`,
-    extra: {
-      post: post,
-      sendUser: createUser,
-    },
-  };
+export async function createReplyNotification(post: Post, targetUser: User, createUser: LoginUser, qna?: boolean) {
+  let body;
+
+  if (qna) {
+    body = {
+      type: 'qna',
+      target_id: targetUser._id,
+      content: `문의글에 답변이 달렸습니다.`,
+      extra: {
+        post: post,
+        sendUser: createUser,
+      },
+    };
+  } else {
+    body = {
+      type: 'reply',
+      target_id: targetUser._id,
+      content: `${createUser.name}님이 댓글을 남기셨습니다.`,
+      extra: {
+        post: post,
+        sendUser: createUser,
+      },
+    };
+  }
 
   try {
     const res = await fetch(`${API_URL}/notifications`, {

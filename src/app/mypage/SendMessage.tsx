@@ -3,6 +3,7 @@
 import { createMessage } from '@/data/actions/addNotification';
 import { LoginUser, User } from '@/types';
 import { useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 interface MessageModalProps {
   target: User;
@@ -18,7 +19,7 @@ export default function MessageModal({ target, user, isOpen, setIsOpen }: Messag
     e.preventDefault();
 
     if (!message.trim()) {
-      alert('메시지를 입력하세요.');
+      toast.error('메시지를 입력하세요.');
       return;
     }
 
@@ -27,10 +28,10 @@ export default function MessageModal({ target, user, isOpen, setIsOpen }: Messag
 
       if (res.ok) {
         console.log('메시지 보내기 성공');
-        alert('쪽지가 전송되었습니다.');
+        toast.success('쪽지가 전송되었습니다.');
       } else {
         console.log('메시지 보내기 실패');
-        alert('쪽지 전송에 실패했습니다.');
+        toast.error('쪽지 전송에 실패했습니다.');
       }
 
       setMessage('');

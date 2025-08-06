@@ -27,18 +27,13 @@ export async function addReview(params: AddReviewParams, accessToken: string): A
       const formData = new FormData();
       params.files.forEach(file => formData.append('attach', file));
 
-      console.log('[addReview] 파일 업로드 시작, 파일 개수:', params.files.length);
       const uploadResult = await uploadFile(formData);
-      console.log('[addReview] uploadFile 결과:', uploadResult);
 
       if (uploadResult.ok === 1) {
         uploadedFiles = uploadResult.item;
-        console.log('[addReview] 업로드된 파일 정보:', uploadedFiles);
       } else {
         throw new Error('파일 업로드 실패');
       }
-    } else {
-      console.log('[addReview] 업로드할 파일이 없습니다.');
     }
 
     const body = {
@@ -51,8 +46,6 @@ export async function addReview(params: AddReviewParams, accessToken: string): A
       },
     };
 
-    console.log('[addReview] 리뷰 등록 요청 바디:', body);
-
     const res = await fetch(`${API_URL}/replies`, {
       method: 'POST',
       headers: {
@@ -64,17 +57,13 @@ export async function addReview(params: AddReviewParams, accessToken: string): A
     });
 
     if (!res.ok) {
-      const errorText = await res.text();
-      console.error('[addReview] 서버 응답 에러:', errorText);
-      throw new Error(`리뷰 등록 실패: ${res.status} - ${errorText}`);
+      throw new Error('리뷰 등록에 실패했습니다. 다시 시도해주세요.');
     }
 
     const json = await res.json();
-    console.log('[addReview] 리뷰 등록 성공 응답:', json);
 
     return json;
   } catch (error) {
-    console.error('[addReview] 함수에서 에러 발생:', error);
     throw error;
   }
 }

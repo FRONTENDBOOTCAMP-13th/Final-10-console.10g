@@ -5,12 +5,14 @@ import BellIcon from '../icon/BellIcon';
 import { useEffect, useRef, useState } from 'react';
 import TriangleIcon from '../icon/TriangleIcon';
 import { useLoginStore } from '@/stores/loginStore';
-import { patchNotification, patchNotificationId } from '@/data/actions/patchNotification';
+import { patchNotification } from '@/data/actions/patchNotification';
 import CloseIcon from '../icon/CloseIcon';
 import { useNotificationStore } from '@/stores/notificationStore';
 import Link from 'next/link';
 import { User } from '@/types';
 import { Product } from '@/types/Product';
+import { Post } from '@/types/Post';
+import toast from 'react-hot-toast';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 export default function NotificationIcon({ isMobile = false }: { isMobile?: boolean }) {
@@ -47,19 +49,19 @@ export default function NotificationIcon({ isMobile = false }: { isMobile?: bool
   };
 
   // 선택 읽음 버튼
-  const handleReadOne = async (id: string) => {
-    if (user) {
-      try {
-        await patchNotificationId(user, id);
+  // const handleReadOne = async (id: string) => {
+  //   if (user) {
+  //     try {
+  //       await patchNotificationId(user, id);
 
-        await fetchNotification();
+  //       await fetchNotification();
 
-        console.log(`알림 ${id}번째를 읽었습니다.`);
-      } catch {
-        console.log('알림 읽음 처리 실패');
-      }
-    }
-  };
+  //       console.log(`알림 ${id}번째를 읽었습니다.`);
+  //     } catch {
+  //       console.log('알림 읽음 처리 실패');
+  //     }
+  //   }
+  // };
 
   // 클릭 외부 감지로 닫기
   useEffect(() => {
@@ -89,8 +91,8 @@ export default function NotificationIcon({ isMobile = false }: { isMobile?: bool
       try {
         await fetchNotification();
         console.log('알림 불러오기');
-      } catch (err) {
-        alert(err);
+      } catch {
+        toast.error('알림 불러오기 실패');
       }
     };
 
@@ -160,6 +162,11 @@ export default function NotificationIcon({ isMobile = false }: { isMobile?: bool
     if (product.image?.path) return product.image.path;
     return fallback;
   };
+  const getPostImageSrc = (post: Post | undefined) => {
+    console.log(post);
+    if (post?.extra?.imagePath) return post.extra.imagePath;
+    return '/default-profile.webp';
+  };
 
   // 모바일 버전
   if (isMobile) {
@@ -199,16 +206,22 @@ export default function NotificationIcon({ isMobile = false }: { isMobile?: bool
                                     <Image src={getProductImageSrc(item.extra.product!)} alt={`${item.extra.product?.name} 상품 이미지`} fill className="object-cover" />
                                   </div>
                                 )}
+                                {item.type === 'message' && (
+                                  <div className="flex flex-row flex-nowrap justify-center items-center relative w-[72px] h-[72px]">
+                                    {/* <div className="text-xs text-primary">새 댓글</div> */}
+                                    <Image src={getUserImageSrc(item.user)} alt={`${item.user.name}님의 프로필 사진`} fill style={{ objectFit: 'cover' }} className="rounded-full border border-gray" />
+                                  </div>
+                                )}
                                 {item.type === 'reply' && (
                                   <div className="flex flex-row flex-nowrap justify-center items-center relative w-[72px] h-[72px]">
                                     {/* <div className="text-xs text-primary">새 댓글</div> */}
                                     <Image src={getUserImageSrc(item.user)} alt={`${item.user.name}님의 프로필 사진`} fill style={{ objectFit: 'cover' }} className="rounded-full border border-gray" />
                                   </div>
                                 )}
-                                {item.type === 'message' && (
+                                {item.type === 'qna' && (
                                   <div className="flex flex-row flex-nowrap justify-center items-center relative w-[72px] h-[72px]">
                                     {/* <div className="text-xs text-primary">새 댓글</div> */}
-                                    <Image src={getUserImageSrc(item.user)} alt={`${item.user.name}님의 프로필 사진`} fill style={{ objectFit: 'cover' }} className="rounded-full border border-gray" />
+                                    <Image src={getPostImageSrc(item.extra.post)} alt={`${item.user.name}님의 프로필 사진`} fill style={{ objectFit: 'cover' }} className="rounded-full border border-gray" />
                                   </div>
                                 )}
                               </div>
@@ -248,6 +261,20 @@ export default function NotificationIcon({ isMobile = false }: { isMobile?: bool
                                     <span className="block text-sm">{item.createdAt}</span>
                                   </>
                                 )}
+                                {/* 문의글 알림 */}
+                                {item.type === 'qna' && (
+                                  <>
+                                    <span className="flex flex-row flex-nowrap items-center text-sm">
+                                      [
+                                      <Link href={`/board/${item.extra.post?.type}/${item.extra.post?._id}`} onClick={() => setOpen(!open)} className="text-primary-dark max-w-[14rem] truncate">
+                                        {item.extra.post?.title}
+                                      </Link>
+                                      ]
+                                    </span>
+                                    <span className="block text-sm">{item.content}</span>
+                                    <span className="block text-sm">{item.createdAt}</span>
+                                  </>
+                                )}
                                 {/* 메시지 알림 */}
                                 {item.type === 'message' && (
                                   <>
@@ -260,14 +287,6 @@ export default function NotificationIcon({ isMobile = false }: { isMobile?: bool
                                 )}
                               </div>
                             </div>
-
-                            {item.type === 'message' ? (
-                              <></>
-                            ) : (
-                              <button type="button" className="absolute top-5 right-5 cursor-pointer" onClick={() => handleReadOne(item._id.toString())}>
-                                <CloseIcon />
-                              </button>
-                            )}
                             {openedMessageId === item._id.toString() && item.type === 'message' && (
                               <div className="flex flex-col flex-nowrap p-4 gap-2 bg-background mt-4">
                                 <p className="font-bold">쪽지 상세보기</p>
@@ -338,16 +357,22 @@ export default function NotificationIcon({ isMobile = false }: { isMobile?: bool
                                   <Image src={getProductImageSrc(item.extra.product!)} alt={`${item.extra.product?.name} 상품 이미지`} fill className="object-cover" />
                                 </div>
                               )}
+                              {item.type === 'message' && (
+                                <div className="flex flex-row flex-nowrap justify-center items-center relative w-[72px] h-[72px]">
+                                  {/* <div className="text-xs text-primary">새 댓글</div> */}
+                                  <Image src={getUserImageSrc(item.user)} alt={`${item.user.name}님의 프로필 사진`} fill style={{ objectFit: 'cover' }} className="rounded-full border border-gray" />
+                                </div>
+                              )}
                               {item.type === 'reply' && (
                                 <div className="flex flex-row flex-nowrap justify-center items-center relative w-[72px] h-[72px]">
                                   {/* <div className="text-xs text-primary">새 댓글</div> */}
                                   <Image src={getUserImageSrc(item.user)} alt={`${item.user.name}님의 프로필 사진`} fill style={{ objectFit: 'cover' }} className="rounded-full border border-gray" />
                                 </div>
                               )}
-                              {item.type === 'message' && (
+                              {item.type === 'qna' && (
                                 <div className="flex flex-row flex-nowrap justify-center items-center relative w-[72px] h-[72px]">
                                   {/* <div className="text-xs text-primary">새 댓글</div> */}
-                                  <Image src={getUserImageSrc(item.user)} alt={`${item.user.name}님의 프로필 사진`} fill style={{ objectFit: 'cover' }} className="rounded-full border border-gray" />
+                                  <Image src={getPostImageSrc(item.extra.post)} alt={`${item.user.name}님의 프로필 사진`} fill style={{ objectFit: 'cover' }} className="rounded-full border border-gray" />
                                 </div>
                               )}
                             </div>
@@ -388,6 +413,20 @@ export default function NotificationIcon({ isMobile = false }: { isMobile?: bool
                                   <span className="block text-sm">{item.createdAt}</span>
                                 </>
                               )}
+                              {/* 문의글 알림 */}
+                              {item.type === 'qna' && (
+                                <>
+                                  <span className="flex flex-row flex-nowrap items-center text-sm">
+                                    [
+                                    <Link href={`/board/${item.extra.post?.type}/${item.extra.post?._id}`} onClick={() => setOpen(!open)} className="text-primary-dark max-w-[14rem] truncate">
+                                      {item.extra.post?.title}
+                                    </Link>
+                                    ]
+                                  </span>
+                                  <span className="block text-sm">{item.content}</span>
+                                  <span className="block text-sm">{item.createdAt}</span>
+                                </>
+                              )}
                               {/* 메시지 알림 */}
                               {item.type === 'message' && (
                                 <>
@@ -400,13 +439,6 @@ export default function NotificationIcon({ isMobile = false }: { isMobile?: bool
                               )}
                             </div>
                           </div>
-                          {item.type === 'message' ? (
-                            <></>
-                          ) : (
-                            <button type="button" className="absolute top-5 right-5 cursor-pointer" onClick={() => handleReadOne(item._id.toString())}>
-                              <CloseIcon />
-                            </button>
-                          )}
                           {openedMessageId === item._id.toString() && item.type === 'message' && (
                             <div className="flex flex-col flex-nowrap p-4 gap-2 bg-background mt-4">
                               <p className="font-bold">쪽지 상세보기</p>

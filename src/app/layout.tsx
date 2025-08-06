@@ -3,6 +3,7 @@ import '../styles/globals.css';
 import Footer from '@/components/common/Footer';
 import type { Metadata } from 'next';
 import { Toaster } from 'react-hot-toast';
+import ClientLayout from './client-layout';
 
 export const metadata: Metadata = {
   title: '도토리섬',
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <Header />
         <Toaster />
+        <ClientLayout />
         {children}
         <Footer />
       </body>

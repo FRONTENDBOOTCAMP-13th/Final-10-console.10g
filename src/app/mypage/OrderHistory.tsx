@@ -54,7 +54,7 @@ export default function OrderHistory() {
 
         console.log(res.item);
       } catch (error) {
-        alert(error);
+        console.error(error);
       }
     };
     fetchOrders();
@@ -62,25 +62,37 @@ export default function OrderHistory() {
 
   useEffect(() => {
     if (orders) {
-      // 결제완료, 배송준비중, 배송중, 배송완료
+      console.log('orders', orders);
+
+      // 상태별 카운트 초기화
+      let state1 = 0; // 결제완료
+      let state2 = 0; // 배송준비중
+      let state3 = 0; // 배송중
+      let state4 = 0; // 배송완료
+
       for (let i = 0; i < orders.length; i++) {
         const diffDays = CalculationDays(orders[i].createdAt);
 
         switch (diffDays) {
           case '결제완료':
-            setOrderState1(prev => prev + 1);
+            state1++;
             break;
           case '배송준비중':
-            setOrderState2(prev => prev + 1);
+            state2++;
             break;
           case '배송중':
-            setOrderState3(prev => prev + 1);
+            state3++;
             break;
           case '배송완료':
-            setOrderState4(prev => prev + 1);
+            state4++;
             break;
         }
       }
+
+      setOrderState1(state1);
+      setOrderState2(state2);
+      setOrderState3(state3);
+      setOrderState4(state4);
     }
   }, [orders]);
 

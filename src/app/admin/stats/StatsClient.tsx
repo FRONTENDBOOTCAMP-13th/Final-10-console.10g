@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLoginStore } from '@/stores/loginStore';
 import { getProductStatistics } from '@/utils/getStats';
 import { ProductStatistics, DayStatistics, StatisticsParams } from '@/types/stats';
+import { useRouter } from 'next/navigation';
 
 interface PreviewData {
   period: string;
@@ -29,6 +30,18 @@ export default function StatsClient() {
   const [hasSearched, setHasSearched] = useState(false);
 
   const user = useLoginStore(state => state.user);
+  const { isLogin, isAdmin, isLoading } = useLoginStore();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading && (!isLogin || !isAdmin)) {
+      router.push('/unauthorized');
+    }
+  }, [isLoading, isLogin, isAdmin, router]);
+
+  if (isLoading) {
+    return <div>권한 확인 중...</div>;
+  }
 
   // 날짜 포맷 변환: "YYYY-MM-DD" -> "YYYY.MM.DD"
   function formatDotDate(dateStr: string) {
@@ -117,7 +130,7 @@ export default function StatsClient() {
     <div className="space-y-8">
       {/* 로딩 오버레이 */}
       {loading && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-30 flex flex-col items-center justify-center">
+        <div className="fixed inset-0 z-50 bg-[rgba(0,0,0,0.3)] flex flex-col items-center justify-center">
           <div className="bg-white p-8 rounded-2xl shadow-2xl text-center">
             <div className="w-12 h-12 border-4 border-[#A97452] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
             <span className="text-[#4A5568] font-semibold text-lg">데이터를 불러오는 중...</span>
@@ -155,7 +168,7 @@ export default function StatsClient() {
           </div>
 
           <div className="flex justify-center pt-4">
-            <button type="submit" disabled={loading || !formData.start || !formData.finish} className="px-8 py-3 bg-[#A97452] text-white font-bold rounded-xl hover:bg-[#966343] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 text-sm sm:text-base shadow-lg">
+            <button type="submit" disabled={loading || !formData.start || !formData.finish} className="px-8 py-3 bg-[#A97452] text-white font-bold rounded-xl hover:bg-[#966343] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 text-sm sm:text-base shadow-lg cursor-pointer">
               {loading ? '조회 중...' : '📈 통계 조회'}
             </button>
           </div>
@@ -206,7 +219,7 @@ export default function StatsClient() {
             <div className="bg-gradient-to-r from-[#A97452] to-[#966343] text-white p-6">
               <div className="flex justify-between items-center">
                 <h2 className="text-base sm:text-xl font-bold">📊 조회 결과</h2>
-                <span className="text-sm sm:text-base bg-[#A97452] bg-opacity-20 px-4 py-2 rounded-full  font-medium">총 {statisticsData.length}개 항목</span>
+                <span className="text-sm sm:text-base bg-[rgba(169,116,82,0.2)] px-4 py-2 rounded-full  font-medium">총 {statisticsData.length}개 항목</span>
               </div>
             </div>
 

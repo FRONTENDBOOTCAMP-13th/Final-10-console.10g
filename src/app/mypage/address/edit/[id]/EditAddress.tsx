@@ -12,6 +12,7 @@ import AddressRecipientField from '../../components/AddressRecipientField';
 import AddressField from '../../components/AddressField';
 import AddressPhoneField from '../../components/AddressPhoneField';
 import AddressDefaultField from '../../components/AddressDefaultField';
+import { toast } from 'react-hot-toast';
 
 export interface AddressFormState {
   deliveryName: string;
@@ -93,7 +94,7 @@ export default function EditAddress() {
         });
       } catch (err) {
         console.error('주소 불러오기 실패:', err);
-        alert(err instanceof Error ? err.message : '주소 정보를 불러오지 못했습니다.');
+        toast.error(err instanceof Error ? err.message : '주소 정보를 불러오지 못했습니다.');
         router.back();
       } finally {
         setLoading(false);
@@ -105,7 +106,7 @@ export default function EditAddress() {
 
   const onSubmit = async (data: AddressFormState) => {
     if (!user?.token?.accessToken) {
-      alert('로그인 후 이용해주세요.');
+      toast.error('로그인 후 이용해주세요.');
       return;
     }
 
@@ -139,11 +140,10 @@ export default function EditAddress() {
         throw new Error(result.message || '배송지 수정에 실패했습니다.');
       }
 
-      alert('배송지가 수정되었습니다.');
+      toast.success('배송지가 수정되었습니다.');
       router.push('/mypage/address');
     } catch (err) {
-      console.error('배송지 수정 실패:', err);
-      alert(err instanceof Error ? err.message : '배송지 수정 중 오류가 발생했습니다.');
+      toast.error(err instanceof Error ? err.message : '배송지 수정 중 오류가 발생했습니다.');
     } finally {
       setLoading(false);
     }

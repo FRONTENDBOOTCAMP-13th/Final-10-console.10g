@@ -18,7 +18,7 @@ export async function postUsersLogin(email: string, password: string): ApiResPro
   };
 
   try {
-    const res = await fetch(`${API_URL}/users/login`, {
+    const res = await fetch(`${API_URL}/users/login?expiresIn=7d`, {
       method: 'POST',
       headers: {
         'Client-Id': CLIENT_ID,

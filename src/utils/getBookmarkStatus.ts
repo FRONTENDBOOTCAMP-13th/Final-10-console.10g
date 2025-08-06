@@ -20,6 +20,9 @@ export async function getBookmarkStatus(productId: number | string, accessToken:
       },
       cache: 'no-store',
     });
+    if (res.status === 404) {
+      return { ok: 1, item: null };
+    }
     const data = await res.json();
     if (data.ok && data.item) {
       return { ok: 1, item: data.item };

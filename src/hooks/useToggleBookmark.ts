@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { addBookmark } from '@/data/actions/addBookmark';
 import { deleteBookmark } from '@/data/actions/deleteBookmark';
 import { usePathname, useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 export function useToggleBookmark(initialBookmarkId: number | undefined, productId: number, accessToken?: string) {
   const [isLiked, setIsLiked] = useState(!!initialBookmarkId);
@@ -20,7 +21,7 @@ export function useToggleBookmark(initialBookmarkId: number | undefined, product
 
     if (isToggling.current) return;
     if (!accessToken) {
-      alert('로그인이 필요합니다.');
+      toast.error('로그인이 필요합니다.');
       router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
       return;
     }

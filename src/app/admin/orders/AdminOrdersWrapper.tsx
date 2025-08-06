@@ -10,6 +10,7 @@ import AdminOrdersMobile from './AdminOrdersMobile';
 import Pagination from '@/components/common/Pagination';
 import { patchOrderState } from '@/data/actions/patchOrderState';
 import Loading from '@/app/loading';
+import { toast } from 'react-hot-toast';
 
 export default function AdminOrdersWrapper() {
   const { isLogin, isAdmin, isLoading } = useLoginStore();
@@ -64,19 +65,19 @@ export default function AdminOrdersWrapper() {
     try {
       const res = await patchOrderState(orderId, nextState, user.token.accessToken);
       if (res.ok !== 1) {
-        alert('상태 변경 실패');
+        toast.error('상태 변경 실패');
         fetchOrders(); // 실패 시 원래 데이터 복구
       }
     } catch (err) {
       console.error('주문 상태 변경 오류:', err);
-      alert('상태 변경 중 오류 발생');
+      toast.error('상태 변경 중 오류 발생');
       fetchOrders();
     }
   };
 
   /** 주문 목록 불러오기 */
   const fetchOrders = useCallback(async () => {
-    if (!user?.token?.accessToken) return;
+    if (!user?.token?.accessToken || !isLogin || !isAdmin) return;
     setLoading(true);
     try {
       const res = await getAdminOrders(user.token.accessToken, {

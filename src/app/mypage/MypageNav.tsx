@@ -5,6 +5,7 @@ import { getUserById } from '@/utils/getUsers';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 export default function MypageNav() {
   const pathname = usePathname();
@@ -22,7 +23,7 @@ export default function MypageNav() {
           setType(userType);
         }
       } catch {
-        alert('일시적인 네트워크 오류로 마이페이지를 불러올 수 없습니다.');
+        toast.error('일시적인 네트워크 오류로 마이페이지를 불러올 수 없습니다.');
       }
     };
 

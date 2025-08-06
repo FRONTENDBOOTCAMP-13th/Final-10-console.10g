@@ -60,7 +60,7 @@ export default function AdminOrdersTable({ orders, timeAgo, removePostalCode, on
                       e.stopPropagation();
                       onChangeOrderState(order._id);
                     }}
-                    className="text-[11px] lg:text-xs px-3 py-1 bg-primary text-white rounded hover:bg-primary-dark"
+                    className="text-[11px] lg:text-xs px-3 py-1 bg-primary text-white rounded hover:bg-primary-dark cursor-grabbing"
                   >
                     변경
                   </button>

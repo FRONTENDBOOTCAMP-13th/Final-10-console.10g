@@ -8,6 +8,7 @@ import type { Product } from '@/types/Product';
 import Loading from '@/app/loading';
 import FilterIcon from '@/components/icon/FilterIcon';
 import Pagination from '@/components/common/Pagination';
+import toast from 'react-hot-toast';
 
 interface LikedProduct extends Product {
   bookmarkId: number;
@@ -53,7 +54,7 @@ export default function Wishlist() {
 
       fetchLiked();
     } catch (error) {
-      alert(error);
+      toast.error(error instanceof Error ? error.message : String(error));
       console.error(error);
     } finally {
       setLoading(false);

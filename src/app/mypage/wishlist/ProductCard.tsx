@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { deleteBookmark } from '@/data/actions/deleteBookmark';
 import { addBookmark } from '@/data/actions/addBookmark';
 import { useLoginStore } from '@/stores/loginStore';
+import toast from 'react-hot-toast';
 
 export default function ProductCard({ product, bookmarkId: initialBookmarkId }: { product: Product; bookmarkId: number }) {
   const router = useRouter();
@@ -21,7 +22,7 @@ export default function ProductCard({ product, bookmarkId: initialBookmarkId }: 
     e.stopPropagation();
 
     if (!user?.token?.accessToken) {
-      alert('로그인이 필요합니다!');
+      toast.error('로그인이 필요합니다!');
       return;
     }
 

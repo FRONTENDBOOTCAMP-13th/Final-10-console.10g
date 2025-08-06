@@ -11,6 +11,7 @@ import FavoriteBorder from '@/components/icon/FavoriteBorderIcon';
 import ImageModal from './ImageModal';
 import MypageIcon from '@/components/icon/MypageIcon';
 import CommentBubble from '@/components/icon/CommentIcon';
+import { toast } from 'react-hot-toast';
 
 interface Props {
   post: Post;
@@ -43,7 +44,7 @@ export default function CommunityPostCard({ post, clientId, bookmarkId: initialB
     e.preventDefault();
 
     if (!user?.token?.accessToken) {
-      alert('로그인이 필요합니다!');
+      toast.error('로그인이 필요합니다!');
       return;
     }
 
@@ -99,10 +100,14 @@ export default function CommunityPostCard({ post, clientId, bookmarkId: initialB
           {/* 작성자 프로필 */}
           <div className="flex items-center mb-2">
             <div className="relative w-6 h-6 rounded-full overflow-hidden mr-2">
-              {typeof post.user.image === 'object' && post.user.image?.path ? (
-                <Image src={`${post.user.image.path}`} alt={post.user?.name ?? '기본 프로필'} fill style={{ objectFit: 'cover' }} />
+              {typeof post.user.image === 'string' ? (
+                // 이미지 등록한 경우 (Cloudinary 등 외부 URL)
+                <Image src={post.user.image} alt={post.user.name ?? '기본 프로필'} fill style={{ objectFit: 'cover' }} />
+              ) : post.user.image?.path ? (
+                // 기본 이미지 경로 (object로 온 경우)
+                <Image src={post.user.image.path} alt={post.user.name ?? '기본 프로필'} fill style={{ objectFit: 'cover' }} />
               ) : (
-                // 기본 SVG 또는 아이콘 컴포넌트
+                // 어떤 이미지도 없을 때 (예외 처리)
                 <MypageIcon svgProps={{ className: 'w-5 h-5' }} />
               )}
             </div>

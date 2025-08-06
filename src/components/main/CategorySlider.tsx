@@ -113,7 +113,7 @@ export default function ProductGrid() {
       {/* 전체보기 버튼 (640px 미만에서만 표시) */}
       {isMobile && (
         <div className="flex justify-end mb-4">
-          <button onClick={() => setShowAll(!showAll)} className="text-sm text-gray-600">
+          <button onClick={() => setShowAll(!showAll)} className="cursor-pointer text-sm text-gray-600">
             {showAll ? '간략 보기' : '전체 보기'}
           </button>
         </div>

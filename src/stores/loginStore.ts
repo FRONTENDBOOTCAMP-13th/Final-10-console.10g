@@ -45,7 +45,6 @@ export const useLoginStore = create<LoginStore>()(
         }),
       logout: () => set({ user: null, isLogin: false, isAdmin: false }),
       refreshUser: async () => {
-        alert('토큰 발행중');
         const prevUser = get().user;
         if (prevUser) {
           const res = await refreshToken(prevUser);

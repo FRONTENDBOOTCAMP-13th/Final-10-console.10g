@@ -195,9 +195,8 @@ export default function AdminProductEditPage({ product }: { product: Product }) 
 
             {/* 배송비 */}
             <div>
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex mb-2">
                 <label className="text-sm font-semibold">배송비 (원)</label>
-                <p className="text-sm text-gray-500">3만원 이상 주문 시 무료배송</p>
               </div>
               <input type="number" min={0} value={shippingFees} onChange={e => setShippingFees(Number(e.target.value))} className="w-full border border-gray-300 rounded-md p-2 focus:ring-1 focus:ring-primary focus:border-transparent" placeholder="배송비를 입력하세요" />
             </div>

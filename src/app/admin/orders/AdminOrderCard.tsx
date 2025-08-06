@@ -55,10 +55,10 @@ export default function AdminOrderCard({ order, timeAgo, removePostalCode, onCha
 
       {/* 버튼 */}
       <div className="grid grid-cols-2 gap-2 w-full mt-2">
-        <button onClick={() => router.push(`/admin/orders/${order._id}`)} className="text-xs py-2 rounded border border-primary text-primary-dark hover:bg-secondary">
+        <button onClick={() => router.push(`/admin/orders/${order._id}`)} className="text-xs py-2 rounded border border-primary text-primary-dark hover:bg-secondary cursor-pointer">
           상세보기
         </button>
-        <button onClick={() => onChangeOrderState(order._id, 'OS020')} className="text-xs py-2 rounded bg-primary text-white hover:bg-primary-dark">
+        <button onClick={() => onChangeOrderState(order._id, 'OS020')} className="text-xs py-2 rounded bg-primary text-white hover:bg-primary-dark cursor-pointer">
           상태 변경
         </button>
       </div>

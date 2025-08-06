@@ -2,6 +2,7 @@
 
 import { useFormContext } from 'react-hook-form';
 import { AddressFormState } from '../edit/[id]/EditAddress';
+import { toast } from 'react-hot-toast';
 
 interface AddressData {
   address: string;
@@ -27,7 +28,7 @@ export default function AddressField() {
 
   const handleAddressSearch = () => {
     if (!window.daum || !window.daum.Postcode) {
-      alert('주소 검색 스크립트가 아직 로드되지 않았습니다.');
+      toast.error('주소 검색 스크립트가 아직 로드되지 않았습니다.');
       return;
     }
 

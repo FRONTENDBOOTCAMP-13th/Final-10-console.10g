@@ -8,10 +8,12 @@ import { patchUserImage } from '@/data/actions/patchUserImage';
 import { patchUserIntro } from '@/data/actions/patcUserIntro';
 import { useUserStore } from '@/stores/userStore';
 import Skeleton from '@/components/common/Skeleton';
+import { toast } from 'react-hot-toast';
 
 export default function ResidentCard() {
   const userState = useUserStore(state => state.user);
   const [editing, setEditing] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
 
   const fetchLoginUser = useLoginStore(state => state.fetchUser);
   const refreshUser = useLoginStore(state => state.refreshUser);
@@ -89,7 +91,7 @@ export default function ResidentCard() {
     }).then(res => res.json());
 
     if (uploadRes.ok !== 1) {
-      alert('이미지 업로드 실패');
+      toast.error('이미지 업로드 실패');
       return;
     }
 
@@ -100,9 +102,8 @@ export default function ResidentCard() {
 
     if (patchRes.ok === 1) {
       await refreshUser();
-      alert('프로필 이미지가 변경되었습니다!');
+      toast.success('프로필 이미지가 변경되었습니다!');
 
-      console.log('프로필 이미지가 변경되었습니다!');
       setUser(prev => prev && { ...prev, image: `${newImage.path}` });
       try {
         console.log(fetchLoginUser);
@@ -111,7 +112,7 @@ export default function ResidentCard() {
         console.log('스토어에 저장이 안댐');
       }
     } else {
-      alert('이미지 변경 실패');
+      toast.error('이미지 변경 실패');
     }
   };
 
@@ -124,23 +125,23 @@ export default function ResidentCard() {
     const patchRes = await patchUserIntro(loginUser._id, trimmedIntro, loginUser.token.accessToken);
 
     if (patchRes.ok === 1) {
-      alert('한줄 소개가 변경되었습니다!');
+      toast.success('한줄 소개가 변경되었습니다!');
       setUser(prev => prev && { ...prev, intro: trimmedIntro });
     } else {
-      alert('한줄 소개 변경 실패');
+      toast.error('한줄 소개 변경 실패');
     }
     setEditing(false);
     setIsSaving(false);
   };
 
-  if (!user) return <Skeleton width="w-full" height="h-full" rounded="rounded-2xl" className="mb-2 w-[350px] h-[192.5px] sm:w-[400px] sm:h-[220px] lg:w-[500px] lg:h-[275px] mx-auto" />;
+  if (!user) return <Skeleton width="w-full" height="h-full" rounded="rounded-2xl" className="mb-2 w-[350px] h-[192.5px] sm:w-[400px] sm:h-[220px] lg:w-[450px] lg:h-[247.5px] mx-auto" />;
 
   return (
     <>
-      {isLoading && <Skeleton width="w-full" height="h-full" rounded="rounded-2xl" className="mb-2 w-[350px] h-[192.5px] sm:w-[400px] sm:h-[220px] lg:w-[500px] lg:h-[275px] mx-auto" />}
+      {isLoading && <Skeleton width="w-full" height="h-full" rounded="rounded-2xl" className="mb-2 w-[350px] h-[192.5px] sm:w-[400px] sm:h-[220px] lg:w-[450px] lg:h-[247.5px] mx-auto" />}
       {!isLoading && (
         <div className="flex flex-col flex-nowrap text-xs sm:text-sm lg:text-base">
-          <div className="relative rounded-xl flex flex-row flex-nowrap gap-8 px-8 items-center justify-center border-2 border-primary w-[350px] h-[192.5px] sm:w-[400px] sm:h-[220px] lg:w-[500px] lg:h-[275px] bg-cover bg-center" style={{ backgroundImage: 'url("/mypage-greencard.png")' }}>
+          <div className="relative rounded-xl flex flex-row flex-nowrap gap-8 px-8 items-center justify-center border-2 border-primary w-[350px] h-[192.5px] sm:w-[400px] sm:h-[220px] lg:w-[450px] lg:h-[247.5px] bg-cover bg-center" style={{ backgroundImage: 'url("/mypage-greencard.png")' }}>
             {/* MEMBERSHIP CARD 텍스트 */}
             <div className="absolute top-1 w-full text-center flex flex-row flex-nowrap items-center justify-center gap-2">
               <div className="flex-1 ml-10 border-t border-[#95aa81]"></div>
@@ -149,7 +150,7 @@ export default function ResidentCard() {
             </div>
 
             {/* 프로필 버튼 */}
-            <button type="button" onClick={() => document.getElementById('profile-upload')?.click()} className="overflow-hidden">
+            <button type="button" onClick={() => setShowProfileModal(true)} className="overflow-hidden">
               <div className="w-full h-full cursor-pointer">
                 {user.image !== '/mypage-profile.png' ? (
                   <div className="relative w-[7rem] h-[7rem]">
@@ -163,6 +164,61 @@ export default function ResidentCard() {
               </div>
               <input type="file" id="profile-upload" accept="image/*" className="hidden" onChange={handleProfileChange} />
             </button>
+
+            {showProfileModal && (
+              <div className="fixed inset-0 z-30 bg-[rgba(0,0,0,0.3)] flex justify-center items-center">
+                <div className="bg-white rounded-lg p-6 w-[300px] shadow-lg">
+                  <h2 className="text-lg font-semibold mb-4 text-center">프로필 이미지 변경</h2>
+
+                  <div className="flex flex-col gap-3">
+                    <button
+                      onClick={() => {
+                        // 기본 이미지로 설정
+                        if (!loginUser?._id || !loginUser.token?.accessToken) {
+                          toast.error('로그인 정보가 없습니다.');
+                          return;
+                        }
+
+                        const defaultImage = {
+                          path: '/default-profile.webp',
+                          originalname: 'default-profile.webp',
+                          name: 'default-profile.webp',
+                        };
+
+                        patchUserImage(loginUser._id, defaultImage, loginUser.token.accessToken).then(res => {
+                          if (res.ok === 1) {
+                            refreshUser();
+                            setUser(prev => prev && { ...prev, image: defaultImage.path });
+                            fetchLoginUser();
+                            toast.success('기본 프로필로 변경되었습니다.');
+                          } else {
+                            toast.error('기본 이미지 설정 실패');
+                          }
+                          setShowProfileModal(false);
+                        });
+                      }}
+                      className="w-full bg-gray-100 py-2 rounded hover:bg-gray-200 cursor-pointer"
+                    >
+                      기본 이미지로 변경
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        document.getElementById('profile-upload')?.click();
+                        setShowProfileModal(false);
+                      }}
+                      className="w-full bg-secondary-green text-white py-2 rounded hover:bg-[#627d4a] cursor-pointer"
+                    >
+                      이미지 업로드
+                    </button>
+
+                    <button onClick={() => setShowProfileModal(false)} className="w-full text-sm text-gray-500 mt-2 hover:underline cursor-pointer">
+                      취소
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* NAME & BIRTH */}
             <div className="flex flex-col flex-1 flex-nowrap gap-2 sm:gap-1">

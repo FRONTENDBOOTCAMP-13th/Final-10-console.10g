@@ -99,15 +99,22 @@ export default function AdminGraph() {
       const res = await getAdminStatisticsOrders(user.token.accessToken);
 
       if (res.ok) {
-        console.log(res);
-        setStatistics({ totalQuantity: res.item.totalQuantity, totalSales: res.item.totalSales });
+        let totalQuantity = 0;
+        let totalSales = 0;
+
+        res.item.map(elem => {
+          totalQuantity += elem.totalQuantity;
+          totalSales += elem.totalSales;
+        });
+
+        setStatistics({ totalQuantity: totalQuantity, totalSales: totalSales });
       } else {
         console.log(res);
       }
     };
 
     getStatistics();
-  }, [user]);
+  }, []);
 
   const dataSignUp = {
     labels: showUserSignUpData.map(d => d.date),
@@ -202,15 +209,15 @@ export default function AdminGraph() {
       <article className="border border-primary-dark w-[95%] mx-auto flex flex-row flex-nowrap justify-center py-8">
         <div className="flex flex-col flex-nowrap justify-center items-center w-1/3 border-r border-primary-light">
           <p>총 매출액</p>
-          <p>{statistics?.totalSales || '0원'}</p>
+          <p>{statistics?.totalSales.toLocaleString() || '0'}원</p>
         </div>
         <div className="flex flex-col flex-nowrap justify-center items-center w-1/3 border-r border-primary-light">
           <p>총 판매량</p>
-          <p>{statistics?.totalQuantity || '0개'}</p>
+          <p>{statistics?.totalQuantity || '0'}개</p>
         </div>
         <div className="flex flex-col flex-nowrap justify-center items-center w-1/3">
           <p>총 회원수</p>
-          <p>{totalUserCount}</p>
+          <p>{totalUserCount}명</p>
         </div>
       </article>
     </section>

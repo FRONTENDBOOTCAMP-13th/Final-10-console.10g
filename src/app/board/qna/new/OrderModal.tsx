@@ -43,7 +43,7 @@ export default function OrderModal({ isOpen, onClose, onSelectOrderProduct }: Or
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-[rgba(0,0,0,0.5)] flex items-center justify-center z-50">
       <div className="bg-white rounded-lg w-full max-w-4xl max-h-[80vh] mx-4 flex flex-col">
         <div className="flex justify-between items-center p-6 border-b">
           <h2 className="text-base sm:text-lg lg:text-xl font-bold">주문 선택</h2>

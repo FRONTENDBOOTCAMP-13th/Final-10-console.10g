@@ -18,17 +18,18 @@ import CartButtons from './CartButtons';
 import { CartResponse } from '@/types/Cart';
 import { getProductById } from '@/utils/getProducts';
 import { useCartBadgeStore } from '@/stores/cartBadgeStore';
+import { toast } from 'react-hot-toast';
 
 export default function CartWrapper() {
   const [cartData, setCartData] = useState<CartResponse | null>(null);
   const previousQty = useRef<Record<number, number>>({});
   const debounceTimers = useRef<Record<number, NodeJS.Timeout | null>>({});
   const { decrease } = useCartBadgeStore();
-  const { user } = useLoginStore();
+  const { user, isLogin } = useLoginStore();
   const cartStore = useCartQuantityStore();
   const router = useRouter();
   const { selectedItems, setSelectedItems, toggleAll, toggleItem } = useCartSelection(cartData);
-
+  const alertedRef = useRef(false);
   // 선택된 상품 총합 계산
   const selectedPriceInfo = useMemo(() => {
     if (!cartData) return { productOnlyTotal: 0, shippingFee: 0, total: 0 };
@@ -38,6 +39,16 @@ export default function CartWrapper() {
 
     return { productOnlyTotal, shippingFee, total: productOnlyTotal + shippingFee };
   }, [cartData, selectedItems, cartStore.quantities]);
+
+  // 권한 가드
+  useEffect(() => {
+    if (alertedRef.current) return;
+    if (isLogin === false) {
+      alertedRef.current = true;
+      toast.error('로그인이 필요합니다.');
+      router.replace('/login');
+    }
+  }, [isLogin, router]);
 
   // 장바구니 데이터 초기 fetch + Zustand 초기화
   useEffect(() => {
@@ -104,7 +115,7 @@ export default function CartWrapper() {
     const currentQty = cartStore.getQuantity(id);
     const maxQty = stock - buyQty;
     if (currentQty >= maxQty) {
-      alert(`최대 ${maxQty}개까지 구매 가능합니다.`);
+      toast.error(`최대 ${maxQty}개까지 구매 가능합니다.`);
       return;
     }
     cartStore.setQuantity(id, currentQty + 1);
@@ -144,7 +155,7 @@ export default function CartWrapper() {
 
   const handlePurchase = () => {
     if (selectedItems.length === 0) {
-      alert('구매할 상품을 선택해주세요.');
+      toast.error('구매할 상품을 선택해주세요.');
       return;
     }
     router.push(`/order?ids=${selectedItems.join(',')}`);

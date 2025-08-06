@@ -35,11 +35,11 @@ export default function NoticePostForm({ boardType }: { boardType: string }) {
 
       {/* 버튼 */}
       <div className="flex justify-end gap-2 mt-6">
-        <button type="submit" className="px-4 py-2 w-24 rounded-md bg-[#A97452] text-white text-sm hover:bg-[#966343] transition-colors" disabled={isLoading}>
+        <button type="submit" className="px-4 py-2 w-24 rounded-md bg-[#A97452] text-white text-sm hover:bg-[#966343] transition-colors cursor-pointer" disabled={isLoading}>
           등록
         </button>
         <Link href={`/board/${boardType}`}>
-          <button type="button" className="px-4 py-2 w-24 rounded-md border-2 border-[#A97452] bg-white text-[#A97452] text-sm hover:bg-[#F5EEE6] transition-colors" disabled={isLoading}>
+          <button type="button" className="px-4 py-2 w-24 rounded-md border-2 border-[#A97452] bg-white text-[#A97452] text-sm hover:bg-[#F5EEE6] transition-colors cursor-pointer" disabled={isLoading}>
             취소
           </button>
         </Link>

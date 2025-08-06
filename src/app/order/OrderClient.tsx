@@ -9,6 +9,7 @@ import OrderCostSummary from './OrderCostSummary';
 import OrderPayment from './OrderPayment';
 import { useState } from 'react';
 import { UserAddress } from '@/types';
+import toast from 'react-hot-toast';
 
 interface Props {
   cartItems: CartItem[];
@@ -37,7 +38,7 @@ export default function OrderClient({ cartCost, cartItems, userInfo, addresses, 
   const handleOrderSubmit = async (data: OrderForm) => {
     // 카드사 미선택 시 주문 막기
     if (payment.method === 'card' && !payment.bank) {
-      alert('카드사를 선택해주세요.');
+      toast.error('카드사를 선택해주세요.');
       return;
     }
 
@@ -64,7 +65,7 @@ export default function OrderClient({ cartCost, cartItems, userInfo, addresses, 
 
       {/* 로딩 오버레이 (스피너) */}
       {isSubmitting && (
-        <div className="absolute inset-0 z-10 bg-grey bg-opacity-30 flex flex-col items-center justify-center">
+        <div className="absolute inset-0 z-10 bg-[rgba(0,0,0,0.3)] flex flex-col items-center justify-center">
           <div className="w-12 h-12 border-4 border-[#A97452] border-t-transparent rounded-full animate-spin mb-2"></div>
           <span className="text-white font-semibold text-sm">주문 처리 중...</span>
         </div>

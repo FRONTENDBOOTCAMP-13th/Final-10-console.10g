@@ -17,6 +17,7 @@ import ReviewFilterTabs from './ReviewFilterTabs';
 import ReviewList from './ReviewList';
 import { ReviewWriteButton, ReviewToggleButton } from './ReviewWriteButton';
 import ReviewSortDropdown, { ReviewSortOption } from './ReviewSortDropdown';
+import toast from 'react-hot-toast';
 
 const REVIEWS_PER_PAGE = 5;
 
@@ -228,7 +229,7 @@ export default function ProductReviews({ productId, productName }: ProductReview
   // 후기 삭제 함수
   const handleDeleteReview = async (reviewId: number) => {
     if (!accessToken) {
-      alert('로그인이 필요합니다.');
+      toast.error('로그인이 필요합니다.');
       return;
     }
 
@@ -238,7 +239,7 @@ export default function ProductReviews({ productId, productName }: ProductReview
 
     try {
       await deleteReview(reviewId, accessToken);
-      alert('후기가 삭제되었습니다.');
+      toast.success('후기가 삭제되었습니다.');
 
       // 삭제 후 상태 업데이트
       await fetchReviews();
@@ -253,7 +254,7 @@ export default function ProductReviews({ productId, productName }: ProductReview
       }
     } catch (error) {
       console.error('후기 삭제 중 오류:', error);
-      alert('후기 삭제에 실패했습니다.');
+      toast.error('후기 삭제에 실패했습니다.');
     }
   };
 
@@ -340,7 +341,7 @@ export default function ProductReviews({ productId, productName }: ProductReview
           onClick={() => {
             if (!canWriteReview) return;
             if (!currentUser) {
-              alert('후기를 작성하려면 로그인해주세요.');
+              toast.error('후기를 작성하려면 로그인해주세요.');
               router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
               return;
             }

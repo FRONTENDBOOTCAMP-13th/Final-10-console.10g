@@ -95,7 +95,7 @@ export default function ReviewSlider() {
     <section className="my-8 px-4">
       {/* 전체보기 토글 버튼 */}
       <div className="flex justify-end mb-4">
-        <button onClick={() => setShowAll(!showAll)} className="text-sm text-gray-600" type="button">
+        <button onClick={() => setShowAll(!showAll)} className="cursor-pointer text-sm text-gray-600" type="button">
           {showAll ? '간략 보기' : '전체 보기'}
         </button>
       </div>
@@ -126,12 +126,12 @@ export default function ReviewSlider() {
         <div className="relative">
           {/* 좌우 버튼 */}
           <button onClick={() => scrollByAmount(-200)} className="absolute left-2 top-1/2 -translate-y-1/2 z-10" aria-label="왼쪽으로 스크롤" type="button">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="size-12 drop-shadow-[0px_0px_3px_rgba(0,0,0,1)]">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="size-12 cursor-pointer drop-shadow-[0px_0px_3px_rgba(0,0,0,1)]">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
             </svg>
           </button>
           <button onClick={() => scrollByAmount(200)} className="absolute right-2 top-1/2 -translate-y-1/2 transform -scale-x-100 z-10" aria-label="오른쪽으로 스크롤" type="button">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="size-12 drop-shadow-[0px_0px_3px_rgba(0,0,0,1)]">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="size-12 cursor-pointer drop-shadow-[0px_0px_3px_rgba(0,0,0,1)]">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
             </svg>
           </button>

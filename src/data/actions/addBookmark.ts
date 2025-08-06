@@ -1,4 +1,5 @@
 import type { ApiResPromise } from '@/types';
+import toast from 'react-hot-toast';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID || '';
@@ -37,7 +38,7 @@ export async function addBookmark(targetId: number, type: 'product' | 'user' | '
     return data;
   } catch (error) {
     console.error(error);
-    alert(error instanceof Error ? error.message : String(error));
+    toast.error(error instanceof Error ? error.message : String(error));
     throw error; // 여기서 반드시 다시 throw 해야 ApiResPromise 반환 보장됨
   }
 }

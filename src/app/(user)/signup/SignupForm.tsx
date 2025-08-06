@@ -14,6 +14,7 @@ import BirthdayField from './BirthdayField';
 import PhoneField from './PhoneField';
 import ProfileImageField from './ProfileImageField';
 import Image from 'next/image';
+import { toast } from 'react-hot-toast';
 
 // 폼 입력값 타입 정의
 export interface SignupFormValues {
@@ -112,17 +113,17 @@ export default function SignupForm() {
       const result = await createUser(null, formData);
 
       if (result.ok) {
-        alert('회원 가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
+        toast.success('회원 가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
         setTimeout(() => router.replace('/login'), 1500);
       } else if (result.errors) {
         Object.entries(result.errors).forEach(([field, error]) => {
           setError(field as keyof SignupFormValues, { message: error?.msg });
         });
       } else {
-        alert(result.message || '회원가입에 실패했습니다.');
+        toast.error(result.message || '회원가입에 실패했습니다.');
       }
     } catch {
-      alert('일시적인 네트워크 문제가 발생했습니다. 다시 시도해주세요.');
+      toast.error('일시적인 네트워크 문제가 발생했습니다. 다시 시도해주세요.');
     }
   };
 

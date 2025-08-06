@@ -108,12 +108,12 @@ export default function PopularSection() {
     <section className="relative my-8 py-4 sm:px-12 text-xs sm:text-sm lg:text-base">
       {/* 좌우 스크롤 버튼 */}
       <button className="absolute left-2 sm:left-10 top-1/2 -translate-y-1/2 z-10" onClick={() => handleScroll('left')}>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="size-12 sm:size-16 lg:size-24 drop-shadow-[0px_0px_4px_rgba(0,0,0,0.5)]">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="size-12 cursor-pointer sm:size-16 lg:size-24 drop-shadow-[0px_0px_4px_rgba(0,0,0,0.5)]">
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
         </svg>
       </button>
       <button className="absolute right-2 sm:right-10 top-1/2 -translate-y-1/2 z-10 transform -scale-x-100" onClick={() => handleScroll('right')}>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="size-12 sm:size-16 lg:size-24 drop-shadow-[0px_0px_4px_rgba(0,0,0,0.5)]">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="size-12 cursor-pointer sm:size-16 lg:size-24 drop-shadow-[0px_0px_4px_rgba(0,0,0,0.5)]">
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
         </svg>
       </button>

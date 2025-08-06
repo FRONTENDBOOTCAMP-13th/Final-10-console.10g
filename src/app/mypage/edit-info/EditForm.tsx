@@ -18,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import BirthdayField from './BirthdayField';
 import { useUserStore } from '@/stores/userStore';
 import Image from 'next/image';
+import toast from 'react-hot-toast';
 
 export default function EditForm() {
   const user = useLoginStore(state => state.user);
@@ -92,18 +93,18 @@ export default function EditForm() {
       console.log('result.item', result.item);
 
       if (result.ok) {
-        alert('회원 정보 수정이 완료되었습니다.');
+        toast.success('회원 정보 수정이 완료되었습니다.');
         setUserId(user._id);
         await fetchUser();
-        alert('보안을 위해 다시 로그인해주세요.');
+        toast('보안을 위해 다시 로그인해주세요.');
         logout();
         setTimeout(() => router.replace('/'), 1500);
       } else {
         // setError();
-        alert(result.message || '회원 정보 수정에 실패했습니다.');
+        toast.error(result.message || '회원 정보 수정에 실패했습니다.');
       }
     } catch {
-      alert('일시적인 네트워크 문제가 발생했습니다. 다시 시도해주세요.');
+      toast.error('일시적인 네트워크 문제가 발생했습니다. 다시 시도해주세요.');
     }
   };
 

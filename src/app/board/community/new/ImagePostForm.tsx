@@ -125,7 +125,7 @@ export default function ImagePostForm({ boardType }: { boardType: string }) {
     <div className="max-w-4xl mx-auto p-4 relative">
       {/* 로딩 오버레이 */}
       {isLoading && (
-        <div className="absolute inset-0 z-10 bg-grey bg-opacity-30 flex flex-col items-center justify-center rounded-lg">
+        <div className="absolute inset-0 z-10 bg-[rgba(0,0,0,0.3)] flex flex-col items-center justify-center rounded-lg">
           <div className="w-12 h-12 border-4 border-[#A97452] border-t-transparent rounded-full animate-spin mb-2"></div>
           <span className="text-white font-semibold text-sm">게시글 등록 중...</span>
         </div>
@@ -213,7 +213,7 @@ export default function ImagePostForm({ boardType }: { boardType: string }) {
 
         {/* 등록 버튼 */}
         <div className="flex justify-end pt-4">
-          <button type="button" onClick={handleSubmit} disabled={isLoading || previewImages.length === 0} className="px-6 py-2 bg-[#A97452] text-white font-semibold rounded-xl hover:bg-[#966343] disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm sm:text-base">
+          <button type="button" onClick={handleSubmit} disabled={isLoading || previewImages.length === 0} className="px-6 py-2 bg-[#A97452] text-white font-semibold rounded-xl hover:bg-[#966343] disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm sm:text-base cursor-pointer">
             {isLoading ? '등록 중...' : '게시글 등록'}
           </button>
         </div>

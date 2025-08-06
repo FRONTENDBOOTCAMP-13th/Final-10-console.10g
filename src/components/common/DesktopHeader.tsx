@@ -19,6 +19,7 @@ import { useCartBadgeStore } from '@/stores/cartBadgeStore';
 export default function DesktopHeader() {
   const router = useRouter();
   const { isLogin } = useLoginStore();
+  const user = useLoginStore(state => state.user);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [detailOpen, setDetailOpen] = useState('신상품');
   const [categoryData, setCategoryData] = useState<string[]>(['신상품 보러가기']);
@@ -208,10 +209,14 @@ export default function DesktopHeader() {
             {!isSearchOpen && (
               <>
                 <li className="relative">
-                  <Link href="/cart" aria-label="장바구니" className="relative">
-                    <CartIcon svgProps={{ className: 'w-6 h-6' }} pathProps={{ stroke: 'white' }} />
-                    {count > 0 && <span className="absolute -top-1 -right-1 bg-red font-bold text-white text-[10px] w-[15px] h-[15px] flex items-center justify-center rounded-full">{count}</span>}
-                  </Link>
+                  {user?.type === 'admin' ? (
+                    <></>
+                  ) : (
+                    <Link href="/cart" aria-label="장바구니" className="relative">
+                      <CartIcon svgProps={{ className: 'w-6 h-6' }} pathProps={{ stroke: 'white' }} />
+                      {count > 0 && <span className="absolute -top-1 -right-1 bg-red font-bold text-white text-[10px] w-[15px] h-[15px] flex items-center justify-center rounded-full">{count}</span>}
+                    </Link>
+                  )}
                 </li>
                 <li>
                   {isLogin && (

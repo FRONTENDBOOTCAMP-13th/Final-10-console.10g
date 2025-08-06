@@ -16,7 +16,7 @@ export default function ShoppingGuide() {
           <h3 className="text-primary-dark font-bold text-lg mb-3">배송 안내</h3>
           <p className="text-sm mb-1">배송 방법: 택배</p>
           <p className="text-sm mb-1">배송 지역: 전국지역</p>
-          <p className="text-sm mb-1">배송 비용: 3,000원 (30,000원 이상 구매시 무료)</p>
+          <p className="text-sm mb-1">배송 비용: 상품에 따라 상이</p>
           <p className="text-sm mb-1">배송 기간: 3일 - 7일</p>
           <p className="text-xs text-gray-600 mt-2">- 산간벽지나 도서지방은 별도의 추가 금액을 지불하셔야 합니다.</p>
         </div>

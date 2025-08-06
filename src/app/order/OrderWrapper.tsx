@@ -18,6 +18,7 @@ import { createPaymentNotification } from '@/data/actions/addNotification';
 import { useNotificationStore } from '@/stores/notificationStore';
 import { UserAddress } from '@/types';
 import { useCartBadgeStore } from '@/stores/cartBadgeStore';
+import toast from 'react-hot-toast';
 
 export default function OrderWrapper() {
   const { user } = useLoginStore();
@@ -60,7 +61,7 @@ export default function OrderWrapper() {
 
   useEffect(() => {
     if (!loading && addresses.length === 0) {
-      alert('배송지를 등록해야 주문이 가능합니다.');
+      toast.error('배송지를 등록해야 주문이 가능합니다.');
       handleAddressAdd();
     }
   }, [loading, addresses.length]);
@@ -72,7 +73,7 @@ export default function OrderWrapper() {
   // 주문 제출 핸들러
   const onSubmit = async (data: OrderForm) => {
     if (!token) {
-      alert('로그인이 필요합니다.');
+      toast.error('로그인이 필요합니다.');
       return;
     }
 
@@ -114,7 +115,7 @@ export default function OrderWrapper() {
 
       router.push(`/order/complete/${res.item._id}`);
     } else {
-      alert(res.message || '주문 실패');
+      toast.error(res.message || '주문 실패');
     }
   };
 

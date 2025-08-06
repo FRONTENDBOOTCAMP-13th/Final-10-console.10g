@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useLoginStore } from '@/stores/loginStore';
 import { postUsersLogin } from '@/data/actions/login';
+import { toast } from 'react-hot-toast';
 
 export default function Login() {
   const router = useRouter();
@@ -41,11 +42,10 @@ export default function Login() {
           type: userData.type,
           updatedAt: userData.updatedAt,
         });
-        alert(`${userData.name}님, 환영합니다!`);
+        toast.success(`${userData.name}님, 환영합니다!`);
         setErrorMsg('');
         router.push(redirectUrl);
       } else {
-        alert(`${res.message}`);
         setErrorMsg(res.message);
       }
     };

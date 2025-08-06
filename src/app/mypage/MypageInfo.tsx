@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import ResidentCard from './ResidentCard';
 import { useUserStore } from '@/stores/userStore';
 import Skeleton from '@/components/common/Skeleton';
+import Logout from './Logout';
 
 export default function MypageInfo() {
   const [name, setName] = useState('회원');
@@ -39,7 +40,7 @@ export default function MypageInfo() {
   if (!user) return;
 
   return (
-    <section className="flex flex-col lg:flex-row flex-nowrap gap-12 sm:gap-6 w-full sm:max-w-[800px] lg:max-w-[1200px] items-center lg:items-stretch mx-auto my-8 py-12 sm:py-8">
+    <section className="flex flex-col lg:flex-row flex-nowrap gap-12 sm:gap-6 w-full sm:max-w-[800px] lg:max-w-[1200px] justify-center items-center lg:items-stretch mx-auto my-8 py-12 sm:py-8 px-4">
       <div className="flex flex-col flex-nowrap w-[90%] sm:w-[600px] lg:w-[350px] bg-white rounded-2xl shadow-[0_0_10px_rgba(0,0,0,0.1)] p-8">
         {isLoading ? (
           <>
@@ -66,9 +67,7 @@ export default function MypageInfo() {
                   장바구니
                 </Link>
               )}
-              <Link href="/mypage/logout" className="w-full text-center border border-primary p-4 rounded-2xl">
-                로그아웃
-              </Link>
+              <Logout />
             </div>
           </>
         )}
@@ -123,9 +122,9 @@ export default function MypageInfo() {
           </ul>
         </div>
       ) : (
-        <div className="flex flex-col lg:flex-row flex-nowrap w-[98%] sm:w-[600px] lg:flex-1 bg-white rounded-2xl shadow-[0_0_10px_rgba(0,0,0,0.1)] p-8">
+        <div className="flex flex-col flex-nowrap w-[98%] sm:w-[600px] lg:w-fit bg-white rounded-2xl shadow-[0_0_10px_rgba(0,0,0,0.1)] p-8">
           <p className="text-primary-dark font-bold pb-4 text-xl text-nowrap">나의 주민증</p>
-          <div className="w-full flex justify-center">
+          <div className="w-full flex justify-center items-center px-8 lg:pb-4">
             <ResidentCard />
           </div>
         </div>
