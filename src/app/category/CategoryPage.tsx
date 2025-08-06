@@ -12,6 +12,7 @@ import FilterIcon from '@/components/icon/FilterIcon';
 import Pagination from '@/components/common/Pagination';
 import { deleteProduct } from '@/data/actions/deleteProduct';
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 
 interface CategoryPageProps {
   category: string;
@@ -306,7 +307,16 @@ export default function CategoryPage({ category, title, detailArray, detail, cat
             </ul>
           )}
         </div>
-        {loading ? <Loading /> : paginatedProducts?.length && <ProductGrid>{likedProducts ? <ProductItemCard products={paginatedProducts} likedProducts={likedProducts} showCheckbox={true} selectedIds={selectedIds} onSelect={toggleSelect}></ProductItemCard> : <ProductItemCard products={paginatedProducts}></ProductItemCard>}</ProductGrid>}
+        {loading ? (
+          <Loading />
+        ) : paginatedProducts && paginatedProducts?.length ? (
+          <ProductGrid>{likedProducts ? <ProductItemCard products={paginatedProducts} likedProducts={likedProducts} showCheckbox={true} selectedIds={selectedIds} onSelect={toggleSelect}></ProductItemCard> : <ProductItemCard products={paginatedProducts}></ProductItemCard>}</ProductGrid>
+        ) : (
+          <div className="flex flex-col flex-nowrap justify-center items-center gap-4 w-full mx-auto">
+            <Image src="/sad-dotori.png" alt="상품 없음" width={247} height={249}></Image>
+            <p>해당하는 상품이 없습니다.</p>
+          </div>
+        )}
         <div className="hidden sm:block">
           <Pagination
             currentPage={currentPage}

@@ -1,0 +1,20 @@
+meta {
+  name: DB 초기화2
+  type: http
+  seq: 18
+}
+
+post {
+  url: https://fesp-api.koyeb.app/market/db/init
+  body: multipartForm
+  auth: inherit
+}
+
+headers {
+  client-id: febc13-final10-emjf
+}
+
+body:multipart-form {
+  initData: @file(D:\final-project\api\dbinit\team\data.json) @contentType(json)
+  attach: @file(D:\final-project\api\dbinit\team\uploadFiles\chiikawa.webp|D:\final-project\api\dbinit\team\uploadFiles\conan.webp|D:\final-project\api\dbinit\team\uploadFiles\ganadi.webp|D:\final-project\api\dbinit\team\uploadFiles\hamster.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0101_01.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0101_02.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0102_01.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0102_02.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0102_03.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0102_04.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0102_05.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0103_01.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0103_02.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0104_01.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0104_02.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0105_01.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0105_02.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0106_01.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0106_02.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0107_01.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0107_02.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0108_01.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0108_02.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0201_01.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0201_02.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0301_01.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0301_02.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0302_01.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0302_02.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0303_01.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0303_02.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0304_01.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0304_02.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0305_01.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0305_02.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0306_01.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0306_02.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0401_01.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0401_02.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0402_01.webp|D:\final-project\api\dbinit\team\uploadFiles\PC0402_02.webp|D:\final-project\api\dbinit\team\uploadFiles\sample-bugatti.png|D:\final-project\api\dbinit\team\uploadFiles\user-muzi.png|D:\final-project\api\dbinit\team\uploadFiles\user-neo.png)
+}

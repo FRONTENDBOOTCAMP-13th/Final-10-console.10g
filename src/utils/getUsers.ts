@@ -16,7 +16,7 @@ export async function getUsers(): ApiResPromise<User[]> {
       headers: {
         'Client-Id': CLIENT_ID,
       },
-      cache: 'force-cache',
+      cache: 'no-store',
     });
     return res.json();
   } catch (error) {

@@ -1,32 +1,6 @@
 {
   "user": [
     {
-      "email": "admin@market.com",
-      "password": "$2b$10$S.8GNMDyvUF0xzujPtHBu.j5gtS19.OhRmYbpJBnCHg2S83WLx1T2",
-      "name": "무지",
-      "phone": "01011112222",
-      "address": "서울 강남구 역삼동 123",
-      "type": "admin",
-      "loginType": "email",
-      "image": "uploadFiles/user-muzi.png",
-      "extra": {
-        "birthday": "03-23"
-      }
-    },
-    {
-      "email": "s1@market.com",
-      "password": "$2b$10$S.8GNMDyvUF0xzujPtHBu.j5gtS19.OhRmYbpJBnCHg2S83WLx1T2",
-      "name": "네오",
-      "phone": "01022223333",
-      "address": "서울 강남구 삼성동 456",
-      "type": "seller",
-      "loginType": "email",
-      "image": "uploadFiles/user-neo.png",
-      "extra": {
-        "birthday": "11-23"
-      }
-    },
-    {
       "email": "noognoog@naver.com",
       "password": "$2b$10$q/LrP1x67hqsJgO/WfkJHuQtuctlNRNZCcbbu6jGttRdb0L9UEwua",
       "name": "엄현욱",
@@ -51,8 +25,8 @@
     {
       "email": "dog@cat.com",
       "password": "$2b$10$OQD/8HVG.mntvzggbZPdtOrOzWgsfGGAkOyIiiOCdAWPEuVbaUiSm",
-      "name": "가나디",
-      "phone": "01022223333",
+      "name": "이선진",
+      "phone": "01056781234",
       "address": "서울 강남구 삼성동 456",
       "type": "admin",
       "loginType": "email",
@@ -158,6 +132,78 @@
           "path": "uploadFiles/PC0102_02.webp",
           "name": "PC0102_02.webp",
           "originalname": "디즈니 스펀지 키친 매트.webp"
+        }
+      ],
+      "content": "<div class=\"product-detail\"><p>상품 상세 설명</p></div>",
+      "extra": {
+        "isNew": false,
+        "isBest": true,
+        "category": ["PC01", "PC0102"],
+        "sort": 5
+      }
+    },
+    {
+      "seller_id": 1,
+      "price": 7000,
+      "shippingFees": 3000,
+      "show": true,
+      "active": true,
+      "name": "디즈니 가방 파우치 키링",
+      "quantity": 10,
+      "buyQuantity": 0,
+      "mainImages": [
+        {
+          "path": "uploadFiles/PC0102_03.webp",
+          "name": "PC0102_03.webp",
+          "originalname": "디즈니 가방 파우치 키링.webp"
+        }
+      ],
+      "content": "<div class=\"product-detail\"><p>상품 상세 설명</p></div>",
+      "extra": {
+        "isNew": false,
+        "isBest": true,
+        "category": ["PC01", "PC0102"],
+        "sort": 5
+      }
+    },
+    {
+      "seller_id": 1,
+      "price": 26000,
+      "shippingFees": 3000,
+      "show": true,
+      "active": true,
+      "name": "월E 플레이 피규어 세트",
+      "quantity": 10,
+      "buyQuantity": 0,
+      "mainImages": [
+        {
+          "path": "uploadFiles/PC0102_04.webp",
+          "name": "PC0102_04.webp",
+          "originalname": "월E 플레이 피규어 세트.webp"
+        }
+      ],
+      "content": "<div class=\"product-detail\"><p>상품 상세 설명</p></div>",
+      "extra": {
+        "isNew": false,
+        "isBest": true,
+        "category": ["PC01", "PC0102"],
+        "sort": 5
+      }
+    },
+    {
+      "seller_id": 1,
+      "price": 3000,
+      "shippingFees": 3000,
+      "show": true,
+      "active": true,
+      "name": "디즈니 6면 큐브퍼즐",
+      "quantity": 10,
+      "buyQuantity": 0,
+      "mainImages": [
+        {
+          "path": "uploadFiles/PC0102_05.webp",
+          "name": "PC0102_05.webp",
+          "originalname": "디즈니 6면 큐브퍼즐.webp"
         }
       ],
       "content": "<div class=\"product-detail\"><p>상품 상세 설명</p></div>",
@@ -336,7 +382,7 @@
         "sort": 5
       }
     },
-     {
+    {
       "seller_id": 1,
       "price": 12000,
       "shippingFees": 3000,
@@ -893,17 +939,17 @@
   "review": [],
   "cart": [],
   "bookmark": [
-      {
-        "user_id": 2,
-        "user": {
-          "_id": 2,
-          "name": "무지",
-          "image": "uploadFiles/user-muzi.png"
-        },
-        "type": "post",
-        "target_id": 3,
-        "memo": "첫째 크리스마스 선물."
-      }
+    {
+      "user_id": 2,
+      "user": {
+        "_id": 2,
+        "name": "무지",
+        "image": "uploadFiles/user-muzi.png"
+      },
+      "type": "post",
+      "target_id": 3,
+      "memo": "첫째 크리스마스 선물."
+    }
   ],
   "post": [],
   "code": [],
