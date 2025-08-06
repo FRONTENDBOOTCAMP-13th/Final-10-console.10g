@@ -12,10 +12,9 @@ import CommunityWriteButton from './CommunityWriteButton';
 interface Props {
   posts: Post[]; // SSR에서 넘어온 전체(또는 image) 게시글 리스트
   apiUrl: string;
-  clientId: string;
 }
 
-export default function CommunityBoardClientWrapper({ posts, apiUrl, clientId }: Props) {
+export default function CommunityBoardClientWrapper({ posts, apiUrl }: Props) {
   const user = useLoginStore(state => state.user);
   const [loading, setLoading] = useState(true);
   const [mergedPosts, setMergedPosts] = useState<Array<Post & { bookmarkId?: number }>>([]);
@@ -204,7 +203,7 @@ export default function CommunityBoardClientWrapper({ posts, apiUrl, clientId }:
       <div className="px-4 my-8">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {currentPosts.map(post => (
-            <CommunityPostCard key={post._id} post={post} apiUrl={apiUrl} clientId={clientId} bookmarkId={post.bookmarkId} />
+            <CommunityPostCard key={post._id} post={post} apiUrl={apiUrl} bookmarkId={post.bookmarkId} />
           ))}
         </div>
 

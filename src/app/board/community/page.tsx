@@ -10,7 +10,6 @@ import { getPosts } from '@/utils/getPosts';
 import CommunityBoardClientWrapper from './CommunityBoardClientWrapper';
 import Breadcrumb from '@/components/common/Breadcrumb';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID;
 export const dynamic = 'force-dynamic';
 export default async function CommunityBoardPage() {
   const res = await getPosts('community');
@@ -35,7 +34,7 @@ export default async function CommunityBoardPage() {
           <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#A97452] py-2">자유게시판</h2>
         </div>
         {/* 이미지 그리드와 페이지네이션 */}
-        <CommunityBoardClientWrapper posts={imagePosts} apiUrl={API_URL!} clientId={CLIENT_ID!} />
+        <CommunityBoardClientWrapper posts={imagePosts} apiUrl={API_URL!} />
       </div>
     </>
   );
