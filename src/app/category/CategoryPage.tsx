@@ -49,6 +49,8 @@ export default function CategoryPage({ category, title, detailArray, detail, cat
   const itemsPerPage = 12;
   const [isMobile, setIsMobile] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [isProduct, setIsProduct] = useState(false);
+  const [isBookmark, setIsBookmark] = useState(false);
   const toggleSelect = (id: number) => {
     setSelectedIds(prev => (prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]));
   };
@@ -136,6 +138,7 @@ export default function CategoryPage({ category, title, detailArray, detail, cat
           if (res.ok) {
             setProducts(res.item);
             setTotalPage(Math.ceil(res.item.length / itemsPerPage));
+            setIsProduct(true);
           }
         }
         // 카테고리 상품 조회
@@ -146,6 +149,7 @@ export default function CategoryPage({ category, title, detailArray, detail, cat
           if (res.ok) {
             setProducts(res.item);
             setTotalPage(Math.ceil(res.item.length / itemsPerPage));
+            setIsProduct(true);
           }
         }
       } catch {
@@ -176,6 +180,7 @@ export default function CategoryPage({ category, title, detailArray, detail, cat
           bookmarkId: v._id,
         }));
         setLikedProducts(products);
+        setIsBookmark(true);
       } catch (err) {
         console.error(err);
       } finally {
@@ -309,14 +314,19 @@ export default function CategoryPage({ category, title, detailArray, detail, cat
         </div>
         {loading ? (
           <Loading />
-        ) : paginatedProducts && paginatedProducts?.length ? (
-          <ProductGrid>{likedProducts ? <ProductItemCard products={paginatedProducts} likedProducts={likedProducts} showCheckbox={true} selectedIds={selectedIds} onSelect={toggleSelect}></ProductItemCard> : <ProductItemCard products={paginatedProducts}></ProductItemCard>}</ProductGrid>
-        ) : (
-          <div className="flex flex-col flex-nowrap justify-center items-center gap-4 w-full mx-auto">
-            <Image src="/sad-dotori.png" alt="상품 없음" width={247} height={249}></Image>
-            <p>해당하는 상품이 없습니다.</p>
-          </div>
-        )}
+        ) : isProduct && isBookmark ? (
+          paginatedProducts && paginatedProducts.length > 0 ? (
+            <ProductGrid>
+              <ProductItemCard products={paginatedProducts} likedProducts={likedProducts} showCheckbox={true} selectedIds={selectedIds} onSelect={toggleSelect} />
+            </ProductGrid>
+          ) : (
+            <div className="flex flex-col flex-nowrap justify-center items-center gap-4 w-full mx-auto">
+              <Image src="/sad-dotori.png" alt="상품 없음" width={247} height={249} />
+              <p>해당하는 상품이 없습니다.</p>
+            </div>
+          )
+        ) : null}
+
         <div className="hidden sm:block">
           <Pagination
             currentPage={currentPage}
