@@ -128,66 +128,59 @@ export default function CategoryPage({ category, title, detailArray, detail, cat
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // 상품 가져오기
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        // 전체 상품 조회
-        if (category === 'all') {
-          const res = await getProducts();
-          if (res.ok) {
-            setProducts(res.item);
-            setTotalPage(Math.ceil(res.item.length / itemsPerPage));
-            setIsProduct(true);
-          }
-        }
-        // 카테고리 상품 조회
-        else {
-          let res;
-          if (detail) res = await getProductsCategory(category, detail);
-          else res = await getProductsCategory(category);
-          if (res.ok) {
-            setProducts(res.item);
-            setTotalPage(Math.ceil(res.item.length / itemsPerPage));
-            setIsProduct(true);
-          }
-        }
-      } catch {
-        console.error('상품 조회 실패');
-      }
-    };
-    fetchProducts();
-  }, []);
-
-  // 북마크 가져오기
-  useEffect(() => {
-    if (!user?.token?.accessToken) {
-      setLoading(false);
-      return;
-    }
-    const fetchLiked = async () => {
+    const fetchData = async () => {
       setLoading(true);
-      try {
-        const res = await getLikedProducts(user.token.accessToken);
-        if (!res.ok) {
-          throw res.message;
+
+      // 상품 가져오기 함수
+      const fetchProducts = async () => {
+        try {
+          if (category === 'all') {
+            const res = await getProducts();
+            if (res.ok) {
+              setProducts(res.item);
+              setTotalPage(Math.ceil(res.item.length / itemsPerPage));
+            }
+          } else {
+            let res;
+            if (detail) res = await getProductsCategory(category, detail);
+            else res = await getProductsCategory(category);
+            if (res.ok) {
+              setProducts(res.item);
+              setTotalPage(Math.ceil(res.item.length / itemsPerPage));
+            }
+          }
+        } catch (err) {
+          console.error('상품 조회 실패', err);
         }
+      };
 
-        const items = res.item as unknown as { _id: number; product: Product }[];
+      // 북마크 가져오기 함수
+      const fetchBookmarks = async () => {
+        try {
+          if (!user?.token?.accessToken) return;
 
-        const products = items.map(v => ({
-          ...v.product,
-          bookmarkId: v._id,
-        }));
-        setLikedProducts(products);
-        setIsBookmark(true);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
+          const res = await getLikedProducts(user.token.accessToken);
+          if (!res.ok) throw res.message;
+
+          const items = res.item as unknown as { _id: number; product: Product }[];
+          const products = items.map(v => ({
+            ...v.product,
+            bookmarkId: v._id,
+          }));
+          setLikedProducts(products);
+        } catch (err) {
+          console.error('북마크 조회 실패', err);
+        }
+      };
+
+      // 두 fetch를 동시에 실행하고, 모두 끝난 후 로딩 false
+      await Promise.all([fetchProducts().then(() => setIsProduct(true)), fetchBookmarks().then(() => setIsBookmark(true))]);
+
+      setLoading(false);
     };
-    fetchLiked();
+
+    fetchData();
   }, [user]);
 
   // 관리자용: 선택 상품 삭제
