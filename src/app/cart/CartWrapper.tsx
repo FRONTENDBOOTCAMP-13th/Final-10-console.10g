@@ -25,7 +25,7 @@ import { useCartSelection } from '@/hooks/useCartSelection';
 export default function CartWrapper() {
   const router = useRouter();
   const { decrease } = useCartBadgeStore();
-  const { user, isLogin } = useLoginStore();
+  const { user } = useLoginStore();
 
   const [cartData, setCartData] = useState<CartResponse | null>(null);
   const alertedRef = useRef(false);
