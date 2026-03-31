@@ -6,7 +6,7 @@ export default function Loading() {
   return (
     <div className="flex flex-col">
       <main className="flex-1 flex flex-col items-center justify-center py-32">
-        <Image src="/loading-dotori.png" alt="로딩 도토리 이미지" width={400} height={400} />
+        <Image src="/loading-dotori.png" alt="로딩 도토리 이미지" width={400} height={400} priority />
         <h1 className="mt-10 text-center">
           곧 도토리섬에 도착해요!
           <br />

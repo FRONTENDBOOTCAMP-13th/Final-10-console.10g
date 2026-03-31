@@ -24,7 +24,7 @@ export default function CartSummary({ productOnlyTotal, shippingFee, total, hand
             <tr>
               <td className="sm:py-6 lg:py-8">{productOnlyTotal.toLocaleString()}원</td>
               <td className="sm:py-6 lg:py-8">{shippingFee.toLocaleString()}원</td>
-              <td className="text-red sm:py-6 lg:py-8">{total.toLocaleString()}원</td>
+              <td className="text-red-700 sm:py-6 lg:py-8">{total.toLocaleString()}원</td>
             </tr>
           </tbody>
         </table>
@@ -33,7 +33,7 @@ export default function CartSummary({ productOnlyTotal, shippingFee, total, hand
       {/* 구매 버튼 */}
       <div className="mt-8 sm:static fixed bottom-0 left-0 right-0 p-4 z-20 bg-white border-t border-gray-200 sm:border-none sm:p-0 shadow-md">
         <button onClick={handlePurchase} className="w-full bg-primary text-white py-4 rounded-md text-center cursor-pointer">
-          <span className="font-bold text-base">{total.toLocaleString()}원 구매하기</span>
+          <span className=" font-bold text-base">{total.toLocaleString()}원 구매하기</span>
         </button>
       </div>
     </>
