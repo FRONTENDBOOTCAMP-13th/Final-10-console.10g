@@ -26,7 +26,7 @@ export default function CartMobileList({ items, selectedItems, toggleItem, incre
         <div key={product._id} className="py-4 border-t border-dark-gray first:border-t-0 last:border-b last:border-dark-gray">
           {/* 체크박스 */}
           <div className="mb-2">
-            <input type="checkbox" disabled={product.product.quantity === 0} checked={selectedItems.includes(product._id)} onChange={() => toggleItem(product._id)} className="accent-black" />
+            <input type="checkbox" disabled={product.product.quantity === 0} checked={selectedItems.includes(product._id)} onChange={() => toggleItem(product._id)} className="accent-black" aria-label="상품 선택" />
           </div>
 
           {/* 품절 UI */}

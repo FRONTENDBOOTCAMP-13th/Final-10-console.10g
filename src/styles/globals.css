@@ -25,6 +25,14 @@
 }
 
 @font-face {
+  font-family: 'RiaSans-ExtraBold';
+  src: url('/font/woff2/RiaSans-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'KNPSBandali-Regular00';
   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/KNPSBandali-Regular00.woff') format('woff');
   font-weight: normal;
@@ -59,34 +67,12 @@
   font-style: normal;
 }
 
-@font-face {
-  font-family: 'SejongGeulggot';
-  src: url('/font/SejongGeulggot.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'RiaSans';
-  src: url('/font/RiaSans-Bold.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
 body {
   font-family: 'Pretendard Variable';
 }
 
-.font-test {
-  font-family: 'HakgyoansimChilpanjiugaeTTF-B';
-}
-
-.font-custom {
-  font-family: 'SejongGeulggot';
-}
-
 .font-logo {
-  font-family: 'RiaSans';
+  font-family: 'RiaSans-ExtraBold';
 }
 
 .sr-only {
@@ -104,7 +90,6 @@ body {
 .dot-bg-wrapper {
   width: 100%;
   position: relative;
-  /* 배경 이미지는 1240px 이상일 때만 보여줌 */
 }
 
 @media (min-width: 1240px) {
@@ -154,7 +139,7 @@ body {
 
 @keyframes slideToCenter {
   0% {
-    right: 0px; /* 화면 밖에서 시작 */
+    right: 0px;
   }
   100% {
     transform: translate(-2%, 0);

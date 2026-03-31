@@ -20,7 +20,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Header />
         <Toaster />
         <ClientLayout />
-        {children}
+        <main id="main-content">{children}</main>
         <Footer />
       </body>
     </html>
