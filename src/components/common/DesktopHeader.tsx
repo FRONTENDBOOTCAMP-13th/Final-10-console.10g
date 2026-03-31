@@ -232,7 +232,7 @@ export default function DesktopHeader() {
                 </li>
                 <NotificationIcon />
                 <li>
-                  <button type="button" className="cursor-pointer" onClick={() => setIsSearchOpen(!isSearchOpen)}>
+                  <button type="button" className="cursor-pointer" onClick={() => setIsSearchOpen(!isSearchOpen)} aria-label="검색">
                     <SearchIconHeader svgProps={{ className: 'w-6 h-6' }} pathProps={{ fill: 'white' }} />
                   </button>
                 </li>
